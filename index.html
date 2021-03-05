@@ -17,6 +17,14 @@
         Je ne suis pas bleu
     </div>
 
+    <button type="button" id="btnvert">Deviens vert</button>
+    
+
+    <div id="textevert">
+        Je ne suis pas vert
+    </div>
+
+
     
 
 </head>
@@ -28,6 +36,11 @@
             $("#txtRed").html("Je suis bleu").css('color','red');
         });
     </script>
+        <script>
+            $("#btnvert").on('click', function(){
+                $("#textevert").html("Je suis vert").css('color','green');
+            });
+        </script>
 </body>
 
 
