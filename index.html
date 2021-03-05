@@ -10,16 +10,27 @@
     </div>
 
 
-    <button type="button">Deviens Bleu</button>
+    <button type="button" id="btnbleu">Deviens Bleu</button>
     
 
-    <div>
+    <div id="textebleu">
         Je ne suis pas bleu
     </div>
 
-
+    
 
 </head>
 <body>
 </body>
+
+
+<script src="assets/vendors/jquery/jquery-3.5.1.min.js"></script>
+
+<script>
+    $('#btnbleu').on("click",function() {
+
+        $('#textebleu').html("Je suis bleu").css("color","blue");
+
+    })
+</script>
 </html>
