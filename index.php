@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 
 require_once 'assets/vendors/autoload.php';
 
@@ -14,6 +13,5 @@ $twig = new \Twig\Environment($loader, [
 
 
 echo $twig->render('login.html', ['name' => 'Fabien']);
-=======
+
 include("controlers/controler.php");
->>>>>>> 1c82d32c26f285d93f064ab8fbc918b6644f369f
