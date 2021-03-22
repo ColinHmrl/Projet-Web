@@ -1,13 +1,10 @@
 header{
     font-size: 1.1rem;
+    padding-bottom: 3rem;
+    background-color: #EBDCCB;
 }
-
 .navbar-brand{
     outline: none;
-}
-
-.navbar{
-    background-color: #EBDCCB;
 }
 
 img{
@@ -44,6 +41,7 @@ img{
 .fas{
     font-size: 2.5rem;
     margin-right: 1.5rem;
+    outline: none;
 }
 .form-inline>.navbar-nav>li{
     display: flex;

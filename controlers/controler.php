@@ -13,4 +13,4 @@ $twig = new \Twig\Environment($loader, [
 
 
 
-echo $twig->render('search_user.html', ['test' => testReq()]);
+//echo $twig->render('index.html', ['test' => testReq()]);

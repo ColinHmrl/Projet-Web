@@ -1,4 +1,4 @@
-html, body{
+html, .text-center{
     background-color: #EBDCCB;
     height: 100%;
     margin: 0px;
@@ -46,7 +46,7 @@ h1{
     font-weight: bold;
 }
 
-form{
+.innerform{
     border: solid 0.5rem #22181C;
     padding: 2rem;
     background-color: #ecc59c;
