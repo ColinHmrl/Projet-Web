@@ -1,0 +1,63 @@
+header{
+    font-size: 1.1rem;
+}
+
+.navbar-brand{
+    outline: none;
+}
+
+.navbar{
+    background-color: #EBDCCB;
+}
+
+img{
+    margin-right: 1rem;
+    height: 4rem;
+    width: 4rem;
+    -webkit-animation: spin-right 10s linear infinite;
+    animation: spin-right 10s linear infinite;
+}
+
+.name{
+    color: #22181C;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.name:hover{
+    text-decoration: none;
+    color: #22181C;
+}
+
+.nav-link, .logo{
+    color: #22181C;
+    opacity: 90%;
+    font-size: 1.75rem;
+}
+
+.nav-link:hover, .logo:hover, .navbar-brand:hover{
+    color: #22181C;
+    opacity: 100%;
+}
+
+.fas{
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+}
+.form-inline>.navbar-nav>li{
+    display: flex;
+    justify-content: center;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+@-webkit-keyframes spin-right {
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+}
