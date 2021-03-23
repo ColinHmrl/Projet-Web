@@ -9,8 +9,49 @@ $twig = new \Twig\Environment($loader, [
     'cache' => false, //__DIR__.'/cache'
 ]);
 
-//$template = $twig->load('index.html');
+if(isset($_GET['deco'])) {
+    session_unset();
+    session_destroy();
+    echo 'Vous vous êtes déconnecté';
+}
 
 
 
-echo $twig->render('search_user.html', ['test' => testReq()]);
+if(isset($_SESSION['user'])) {
+
+
+
+    echo $twig->render('search_user.html', ['test' => 'Bienvenue '.$_SESSION['user']->first_name]);
+
+
+}
+else {
+
+    
+    
+    if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])) {
+
+        require 'models/model_login.php';
+        \Requetes\loginUser($_POST['inputEmail'],$_POST['inputPassword']);
+
+        if(isset($_SESSION['user'])) {
+            echo $twig->render('search_user.html', ['test' => ['Bienvenue '.$_SESSION['user']->first_name]]);
+        }  
+        else {
+            echo $twig->render('login.html', ['errorlogin' => 'Erreur, mauvais mot de passe ou email']);
+        }
+
+        
+
+    }
+    else {
+
+        echo $twig->render('login.html');
+
+    }
+
+
+    
+
+}
+
