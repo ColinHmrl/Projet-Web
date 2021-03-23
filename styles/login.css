@@ -1,8 +1,61 @@
-body{
-    background-color: aliceblue;
+html, .text-center{
+    background-color: #EBDCCB;
+    height: 100%;
+    margin: 0px;
+    font-size: 1.1rem;
+    color: #22181C;
+    font-weight: bold;
+
 }
 
-.from{
+.form{
+    height: 100%;
     display: flex;
     align-items: center;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+}
+
+.email, .password{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+input{
+    border:none;
+    border-radius: 0.5rem;
+    background-color: #C3BAAA;
+    padding-left: 1rem;
+}
+
+input:focus{
+    outline: none;
+}
+
+.btn{
+    margin-top: 1rem;
+    background-color: #d85f5f;
+    font-weight: bold;
+}
+
+h1{
+    font-weight: bold;
+}
+
+.innerform{
+    border: solid 0.5rem #22181C;
+    padding: 2rem;
+    background-color: #ecc59c;
+    border-radius: 3rem;
+}
+
+.shadow{
+    background-color: #22181C;
+    padding: 0 1.5rem 1.5rem 0;
+    border-radius: 6rem;
+    border-bottom-right-radius: 3rem;
 }
