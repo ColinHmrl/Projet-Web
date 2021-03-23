@@ -1,0 +1,7 @@
+.field{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
