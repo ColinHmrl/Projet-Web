@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% block links %}
+{% endblock %}
+{% block body %}
+<form class="container" action="controler_modification_company.php" method="get">
+    <div class="row">
+        <label class="col-6" for="id">id :</label><input class="col-6" type="text" id="id" name="id" value="1" requiered>
+    </div>
+    
+    <input type="submit" value="edit">
+</form>
+
+{% endblock %}

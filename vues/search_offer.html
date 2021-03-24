@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+
+
+{% block links %}
+
+<link rel="stylesheet" href="/styles/autocomplete.css">
+<script src="/scripts/autocomplete.js"></script>
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<form autocomplete="off" class="container-fluid bg-danger">
+    <div class="row justify-content-center py-3">
+        <input type="text" class="col-6" placeholder="search offer">
+    </div>
+    <div class="row justify-content-around pb-3">
+
+        <div class="autocomplete col-1" style="width:300px;">
+            <input id="myInput" type="text" name="myCountry" placeholder="Company">
+        </div>
+        <select class="col-1" name="promotion">
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="A3">A3</option>
+            <option value="A4">A4</option>
+            <option value="A5">A5</option>
+        </select>
+        <input type="text" name="duration" placeholder="duration" class="col-1"></input>
+        <input class="col-1" type="range" min="0" max="20" step="0.1" value="1" id="foo" name="remuneration"
+            onchange='document.getElementById("bar").value = "Slider Value = " + document.getElementById("foo").value;' />
+        <input class="col-1" type="text" name="bar" id="bar" value="Slider Value = 1" disabled />
+        <select class="col-1" name="duration">
+            <option value="-1">-1 mois</option>
+            <option value="+1">+1 mois</option>
+            <option value="+3">+3 mois</option>
+            <option value="+6">+6 mois</option>
+            <option value="+12">+1 an</option>
+        </select>
+        <input type="date" name="date">
+        <input type="range" min="1" max="10" step="1" value="1" name="places">
+        <input type="text" name="company" placeholder="company" class="col-1"></input>
+    </div>
+</form>
+
+
+<div class="container bg-primary">
+    <!--Afficher les row-->
+    {% for item in result %}
+    <div class="row">
+        {{item.locality}}
+    </div>
+    {% endfor %}
+
+</div>
+
+
+<script>
+    var countries = {{ tab| json_encode() | raw }};
+
+    autocomplete(document.getElementById("myInput"), countries);
+</script>
+
+{% endblock %}
