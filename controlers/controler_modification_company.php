@@ -24,9 +24,6 @@ if(isset($_GET['id'])){
 if(isset($_POST['name'])){
     echo 'updated';
     update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']);
-
 }
-
-
 
 ?>

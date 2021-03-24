@@ -16,7 +16,4 @@ if(isset($_POST['name'])){
     else{
         echo $twig->render('create_company.html');
     }
-
-
-
 ?>
