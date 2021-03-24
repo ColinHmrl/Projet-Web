@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% block links %}
+<link href="../styles/create_company.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<form class="container" action="controler_modification_company.php" method="post">
+    <h1>Modification Entreprise</h1>
+    <div class="row">
+        <div class="col-6">
+            <div class="container">
+                <input class="col-12" type="hidden" id="id" name="id" value="{{id}}" requiered>
+                <label class="row" for="name">Company Name :</label><input class="col-12" type="text" id="name" name="name" value="{{nameCompany}}" requiered>
+                <label class="row" for="locality">Locality :</label><input class="col-12" type="text" id="locality" name="locality" value="{{locality}}" requiered>
+                <label class="row" for="email">Email :</label><input class="col-12" type="text" id="email" name="email" value="{{email}}" requiered>
+                <label class="row" for="activity_area">Field of activity :</label><input class="col-12" type="text" id="activity_area" name="activity_area" value="{{activity_area}}" requiered>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="container">
+                <label class="row" for="description">Description :</label><textarea class="col-12" type="text" id="description" name="description" row="10" requiered>{{description}}</textarea>
+            </div>
+
+        </div>
+
+    </div>
+    <br>
+    <div class="row">
+        <input class="col" type="submit">
+    </div>
+</form>
+{% endblock %}
