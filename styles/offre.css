@@ -1,0 +1,41 @@
+.Entreprise, .Location {
+    justify-content: space-between;
+}
+
+html, .text-center{
+    background-color: #EBDCCB;
+    height: 100%;
+    margin: 0px;
+    font-size: 1.1rem;
+    color: #22181C;
+    font-weight: bold;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+}
+
+.btn{
+    margin-top: 1rem;
+    background-color: #d85f5f;
+    font-weight: bold;
+}
+
+.crit{
+    display: flex;
+    margin-top: 1rem;
+    font-weight: bold;
+    background-color: #EBDCCB;
+}
+
+label
+{
+	display: block;
+	width: 150px;
+}
+
+.container {
+    background-color: #EBDCCB;
+    max-width: 1000000000px;
+}
