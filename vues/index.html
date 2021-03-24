@@ -17,7 +17,8 @@
 		<title>Projet THAS</title>
 	</head>
 	<body>
-		{% include "header.html"%}
+		{% import 'header.html' as header %}
+		{{ header.header('monprojet.fr') }}
 		{% block body %}
 		{% endblock %}	
 	</body>
