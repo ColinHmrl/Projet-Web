@@ -19,16 +19,10 @@ if(isset($_GET['deco'])) {
 
 if(isset($_SESSION['user'])) {
 
-
-
     echo $twig->render('search_user.html', ['test' => 'Bienvenue '.$_SESSION['user']->first_name]);
-
-
 }
 else {
 
-    
-    
     if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])) {
 
         require 'models/model_login.php';
@@ -41,17 +35,12 @@ else {
             echo $twig->render('login.html', ['errorlogin' => 'Erreur, mauvais mot de passe ou email']);
         }
 
-        
-
     }
     else {
 
         echo $twig->render('login.html');
 
     }
-
-
-    
 
 }
 
