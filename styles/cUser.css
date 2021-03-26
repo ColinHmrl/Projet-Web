@@ -5,3 +5,21 @@
     padding-left: 1rem;
     padding-right: 1rem;
 }
+.student, .otherRole .rights{
+    display: none;
+}
+
+.rights{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-evenly;
+    height: 500;
+    width: 100%;
+}
+.form-check{
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+.btn{
+    margin-top: 1rem
+}
