@@ -2,10 +2,12 @@
 
 {% block body %}
 
-    {% for tests in test %}
-        <p>{{tests.email}}</p>
-    {% endfor %}
-
-    {{test}}
+<form class="container" action="../controlers/controler_create_user.php" method="get">
+    <div class="row">
+        <label class="col-6" for="id">id :</label><input class="col-6" type="text" id="id" name="id" value="1" requiered>
+    </div>
+    
+    <input type="submit" value="edit">
+</form>
 
 {% endblock %}
