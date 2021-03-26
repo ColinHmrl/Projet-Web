@@ -2,12 +2,61 @@
 {% block links %}
 {% endblock %}
 {% block body %}
-<form class="container" action="controler_modification_company.php" method="get">
+
+<form class="container" action="controler_creation_modification_company.php" method="get">
     <div class="row">
         <label class="col-6" for="id">id :</label><input class="col-6" type="text" id="id" name="id" value="1" requiered>
     </div>
-    
+
     <input type="submit" value="edit">
-</form>
+</form> 
+
+<div class="contianer-fluid">
+    <form class="container " action="../controlers/controler_search_company.php" method="get">
+        <!--
+
+    critères de recherches :
+        nom text
+        secteur domaine : liste déroulante entre ceux présent dans la bdd
+        compétences recherchés liste déroulante avec case a coché ceux présent dans la bdd
+        localités text avec autocomplétion ceux présent dans la bdd
+        nombre de stagiaire au minimum input  nombre
+        éval stagiaire note minimum
+        eval pilote note minimum
+
+
+        -->
+        <input type="text" placeholder="Company name" name="companyName" />
+
+        <select name="activityArea" id="activityArea" multiple>
+            <option selected="selected">Activity Area</option>
+            {{activity_area | raw}}
+        </select>
+
+        <select name="locality" id="locality" multiple>
+            {{locality | raw}}
+        </select>
+
+        <select name="skills" id="skills" multiple>
+            {{skills | raw}}
+        </select>
+        <input type="number" placeholder="Number of Trainee" name="numberOfTrainee">
+        <input type="number" placeholder="Trainee Score" name="traineeScore">
+        <input type="number" placeholder="Pilot Score" name="PilotScore">
+        <input type="submit" />
+
+    </form>
+</div>
+
+
+<div class="container">
+    {{outputEntreprise | raw}}
+
+</div>
+
+
+
+
 
 {% endblock %}
+
