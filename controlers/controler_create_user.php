@@ -1,17 +1,52 @@
 <?php
+    session_start();
 
-if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])) {
+    require_once '../assets/vendors/autoload.php';
+    require '../models/model_user.php';
 
-    require 'models/model_login.php';
-    \Requetes\loginUser($_POST['inputEmail'],$_POST['inputPassword']);
+    $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../vues');
+    $twig = new \Twig\Environment($loader, [
+        'cache' => false, //__DIR__.'/cache'
+    ]);
 
-    if(isset($_SESSION['user'])) {
-        echo $twig->render('search_user.html', ['test' => ['Bienvenue '.$_SESSION['user']->first_name]]);
-    }  
-    else {
-        echo $twig->render('login.html', ['errorlogin' => 'Erreur, mauvais mot de passe ou email']);
+    $create = true;
+
+    if($create){
+        if(isset($_POST['last_name'])){
+            Requetes\insert_user($_POST['last_name'],$_POST['first_name'],$_POST['email'],$_POST['password'],$_POST['roles'],$_POST['id_centers']);
+            echo 'succeed';
+            return;
+            }
+            else{
+                echo $twig->render('cUser.html',
+                [
+                    'first_name' => "",
+                    'last_name' => "",
+                    'email' => "",
+                    'password' => "",
+                    'role' => "role",
+                    'curent_center' => "center"
+                    ]
+            );
+        }
+    }else{
+        if(isset($_GET['id'])){
+            echo "succeed get id";
+            $result = Requetes\get_user($_GET['id']);
+            echo $twig->render('cUser.html',
+            [
+                'first_name' => $result->first_name,
+                'last_name' => $result->last_name,
+                'email' => $result->email,
+                'password' => $result->password,
+                'role' => $result->role,
+                'curent_center' => $result->center
+                ]
+            );
+        }
+        if(isset($_POST['name'])){
+            echo 'updated';
+            Requetes\update_user($_GET['id'],$_POST['first_name'],$_POST['last_name'],$_POST['email'],$_POST['password'],$_POST['role'],false,$_POST['center']);
+        }
     }
-
-    }
-
 ?>
