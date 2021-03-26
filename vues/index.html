@@ -14,7 +14,8 @@
 		{% block links %}
 		{% endblock %}
 
-		<title>Projet THAS</title>
+        <title>{{titre | default('Projet THAS')}}</title>
+		
 	</head>
 	<body>
 		{% import 'header.html' as header %}

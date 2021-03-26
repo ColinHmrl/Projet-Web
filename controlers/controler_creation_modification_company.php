@@ -7,9 +7,9 @@ $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../vues');
 $twig = new \Twig\Environment($loader, [
     'cache' => false, //__DIR__.'/cache'
 ]);
+
+
 // arrivé sur la page 
-
-
 if(isset($_GET['id'])){
     
         $result = get_company($_GET['id']);
@@ -19,7 +19,8 @@ if(isset($_GET['id'])){
             'locality' => $result->locality,
             'email' => $result->email,
             'activity_area' => $result->activity_area,
-            'description' => $result->description
+            'description' => $result->description,
+            'titre'=> 'Modification Entreprise'
             ]);
 }elseif(isset($_POST['name'])){
     if($_POST['id']){
@@ -36,7 +37,9 @@ if(isset($_GET['id'])){
 
 
     //création
-    echo $twig->render('creation_modification_company.html');
+    echo $twig->render('creation_modification_company.html',[
+    'titre'=> 'Creation Entreprise'
+    ]);
 }   
 
 ?>

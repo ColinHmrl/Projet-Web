@@ -81,7 +81,7 @@ function search_company(){
             $sql .= "AND PilotScore >= :".$PilotScore;
         }
 
-        echo $sql;
+        
          
         
 
