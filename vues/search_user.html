@@ -1,13 +1,35 @@
 {% extends 'index.html' %}
 
+{% block links %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+
+
+{% endblock %}
+
 {% block body %}
 
-<form class="container" action="../controlers/controler_create_user.php" method="get">
-    <div class="row">
-        <label class="col-6" for="id">id :</label><input class="col-6" type="text" id="id" name="id" value="1" requiered>
-    </div>
-    
-    <input type="submit" value="edit">
-</form>
+<button type="button" id="btn_jquery">oui</button>
+<div class="container">
 
+
+<table id="table_user" class="display">
+    <thead>
+        <tr>
+            <th>First_Name</th>
+            <th>Second_Name</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+    <tbody id="user_result">
+        
+    </tbody>
+</table>
+
+</div>
+
+<script src="/scripts/get_users.js"></script>
 {% endblock %}

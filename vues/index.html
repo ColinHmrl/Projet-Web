@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 	<head>
 		
@@ -14,11 +14,12 @@
 		{% block links %}
 		{% endblock %}
 
-		<title>Projet THAS</title>
+        <title>{{titre | default('Projet THAS')}}</title>
+		
 	</head>
 	<body>
 		{% import 'header.html' as header %}
-		{{ header.header('monprojet.fr') }}
+		{{ header.header('thas.fr') }}
 		{% block body %}
 		{% endblock %}	
 	</body>
