@@ -30,11 +30,9 @@ $twig->addFunction($functionTruncate);
 
 if(isset($_SESSION['user'])) {
 
-    if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])) {
-    }
 
     $table = [];
-
+    
     if(!empty($_GET['company']))
         $table['name'] = $_GET['company'];
 
@@ -65,6 +63,6 @@ if(isset($_SESSION['user'])) {
 }
 else {
 
-            echo "error : veuillez vous login... (redirect dans 3s) <a href='http://monprojet.fr'>Login</a>";
+            echo "error : veuillez vous login... (redirect dans 3s) <a href='http://internship-finder.fr'>Login</a>";
 }
 ?>
