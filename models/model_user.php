@@ -4,51 +4,56 @@ namespace Requetes;
 
 require_once "../assets/vendors/class/Right.php";
 
-function insert_user($last_name, $first_name, $email, $password, $roles, $id_centers,$promotions,$rights){
-    try{
-        include('loginBDD.php');
+class User{
 
-        //insert datas in the table users
-
-        $req = $bdd->prepare('INSERT INTO users (last_name, first_name, email, password, roles, del, id_centers) VALUES (?, ?, ?, ?, ?, false, ?);');
-        
-        if(!$req->execute([$last_name, $first_name, $email, $password, $roles, $id_centers]))
-            print_r($bdd->errorInfo());
-
-        //get id of the user you just add
-
-        $id_user = $bdd->lastInsertId();
-
-        //insert datas in user_promotions
-
-        foreach($promotions as $promo){
-
-            $req = $bdd->prepare('INSERT INTO users_promotions (id_promotion, id_users, del) VALUES (?, ?, false);');
-
-            $promo_id = get_id_promotion($promo);
-
-            if(!$req->execute([$promo_id, $id_user]))
+    static function insert_user($last_name, $first_name, $email, $password, $roles, $id_centers,$promotions,$rights){
+        try{
+            include('loginBDD.php');
+    
+            //insert datas in the table users
+    
+            $req = $bdd->prepare('INSERT INTO users (last_name, first_name, email, password, roles, del, id_centers) VALUES (?, ?, ?, ?, ?, false, ?);');
+            
+            if(!$req->execute([$last_name, $first_name, $email, $password, $roles, $id_centers]))
                 print_r($bdd->errorInfo());
-
+    
+            //get id of the user you just add
+    
+            $id_user = $bdd->lastInsertId();
+    
+            //insert datas in user_promotions
+    
+            foreach($promotions as $promo){
+    
+                $req = $bdd->prepare('INSERT INTO users_promotions (id_promotion, id_users, del) VALUES (?, ?, false);');
+                $promo_id = get_id_promotion($promo);
+                if(!$req->execute([$promo_id, $id_user]))
+                    print_r($bdd->errorInfo());
+            }
+    
+    
+            foreach($rights as $right){
+                $req = $bdd->prepare('INSERT INTO rights (id_right, del, id_users) VALUES (?, false, ?);');
+                if(!$req->execute([$right->id, $id_user]))
+                    print_r($bdd->errorInfo());
+            }
+    
         }
-
-
-        foreach($rights as $right){
-            $req = $bdd->prepare('INSERT INTO rights (id_right, del, id_users) VALUES (?, false, ?);');
-            if(!$req->execute([$right->id, $id_user]))
-                print_r($bdd->errorInfo());
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
         }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+    }
 
-    }
-    catch(\Exception $e)
-    {
-            die('Erreur : '.$e->getMessage());
-    }
-    catch(\PDOException $e)
-    {
-            die('Erreur : '.$e->getMessage());
-    }
+
+
 }
+
+
 
 function get_user($id){
 
