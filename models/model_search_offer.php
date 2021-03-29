@@ -8,7 +8,7 @@ static function getOffer($tab){
 
 include('loginBDD.php');
 
-$stringSQL = 'SELECT offer.id,company.name,locality_offer,title,nb_places,description,offer_date,training_period,DATEDIFF(CURRENT_TIMESTAMP, date_post) AS day_ago,remuneration_basis FROM offer INNER JOIN company ON company.id = offer.id_company';
+$stringSQL = 'SELECT offer.id,company.name,locality_offer,title,nb_places,company.description,offer_date,training_period,DATEDIFF(CURRENT_TIMESTAMP, date_post) AS day_ago,remuneration_basis FROM offer INNER JOIN company ON company.id = offer.id_company';
 $tableValue = [];
 
 $count = count($tab);
@@ -80,7 +80,7 @@ if($count>0) {
 static function getSkills($id) {
 
     include('loginBDD.php');
-    $req = $bdd->prepare('SELECT skills.name FROM offer INNER JOIN need ON need.id = offer.id INNER JOIN skills ON skills.id = need.id_skills WHERE offer.id = ?');
+    $req = $bdd->prepare('SELECT skills.name FROM offer INNER JOIN need ON need.id_offer = offer.id INNER JOIN skills ON skills.id = need.id_skills WHERE offer.id = ?');
 
     if(!$req->execute([$id]))
         print_r($bdd->errorInfo());
@@ -100,7 +100,7 @@ static function getSkills($id) {
 static function getPromo($id) {
 
     include('loginBDD.php');
-    $req = $bdd->prepare('SELECT promotions.name FROM `offer` INNER JOIN available_for ON offer.id = available_for.id INNER JOIN promotions ON promotions.id = available_for.id_promotions WHERE offer.id = ?');
+    $req = $bdd->prepare('SELECT promotions.name FROM `offer` INNER JOIN offer_promotions ON offer.id = offer_promotions.id_offer INNER JOIN promotions ON promotions.id = offer_promotions.id_promotions WHERE offer.id = ?');
 
     if(!$req->execute([$id]))
         print_r($bdd->errorInfo());
