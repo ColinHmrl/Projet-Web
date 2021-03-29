@@ -1,6 +1,6 @@
 <?php
 
-class model_search_offer {
+class model_wishlist {
 
 static function getOffer($tab){
 
@@ -8,7 +8,7 @@ static function getOffer($tab){
 
 include('loginBDD.php');
 
-$stringSQL = 'SELECT offer.id,company.name,locality_offer,title,nb_places,offer.description,offer_date,training_period,DATEDIFF(CURRENT_TIMESTAMP, date_post) AS day_ago,remuneration_basis FROM offer INNER JOIN company ON company.id = offer.id_company';
+$stringSQL = 'SELECT offer.id,company.name,locality_offer,title,nb_places,offer.description,offer_date,training_period,DATEDIFF(CURRENT_TIMESTAMP, date_post) AS day_ago,remuneration_basis FROM offer INNER JOIN company ON company.id = offer.id_company INNER JOIN wishlist ON wishlist.id_offer = offer.id';
 $tableValue = [];
 
 $count = count($tab);
@@ -63,7 +63,7 @@ if($count>0) {
         while($donnee = $req->fetch()) {
 
             if(isset($tab['promotion'])) {
-                if(array_search($tab['promotion'],self::getPromo($donnee->id)) !== false)
+                if(array_search($tab['promotion'],model_search_offer::getPromo($donnee->id)) !== false)
                 $donnees[] = $donnee;
             }
             else
@@ -77,73 +77,84 @@ if($count>0) {
 
 }
 
-static function getSkills($id) {
+
+static function isWishlist($id_user,$id_offer) {
 
     include('loginBDD.php');
-    $req = $bdd->prepare('SELECT skills.name FROM offer INNER JOIN need ON need.id_offer = offer.id INNER JOIN skills ON skills.id = need.id_skills WHERE offer.id = ?');
+    $req = $bdd->prepare('SELECT * FROM wishlist WHERE id_users = ? AND id_offer = ?');
 
-    if(!$req->execute([$id]))
+    if(!$req->execute([$id_user,$id_offer]))
         print_r($bdd->errorInfo());
     else {
-        //var_dump(hash('sha256',$password));
-        if($donnees = $req->fetchAll()) {
+        $test = $req->fetch();
+        $req->closeCursor();
+        return $test ? true : false;
+            
+          
+        
+    }
+
+
+}
+
+
+static function remove($id_user,$id_offer) {
+
+    if(self::isWishlist($id_user,$id_offer)) {
+
+        include('loginBDD.php');
+        $req = $bdd->prepare('DELETE FROM wishlist WHERE id_users = ? AND id_offer = ?');
+
+        if(!$req->execute([$id_user,$id_offer]))
+        print_r($bdd->errorInfo());
+        else {
+        $req->closeCursor();
+    }
+
+
+    }
+    
+
+}
+
+
+static function add($id_user,$id_offer) {
+
+    if(!self::isWishlist($id_user,$id_offer)) {
+    include('loginBDD.php');
+    $req = $bdd->prepare("INSERT INTO `wishlist` (`id_users`, `id_offer`, `step`, `del`) VALUES (?, ?, '0', '0');");
+
+    if(!$req->execute([$id_user,$id_offer]))
+        print_r($bdd->errorInfo());
+    else {
+        $req->closeCursor();
+    }
+    }
+}
+
+static function getStep($id_user,$id_offer) {
+
+
+    if(self::isWishlist($id_user,$id_offer)) {
+
+        include('loginBDD.php');
+        $req = $bdd->prepare('SELECT step FROM wishlist WHERE id_users = ? AND id_offer = ?');
+
+        if(!$req->execute([$id_user,$id_offer]))
+        print_r($bdd->errorInfo());
+        else {
+        
+        if($jaj = $req->fetch()) {
             $req->closeCursor();
-            return $donnees;
+            return $jaj;
         }
-        echo 'No Result';
-        
+      
     }
-    
 
-}
-
-static function getPromo($id) {
-
-    include('loginBDD.php');
-    $req = $bdd->prepare('SELECT promotions.name FROM `offer` INNER JOIN offer_promotions ON offer.id = offer_promotions.id_offer INNER JOIN promotions ON promotions.id = offer_promotions.id_promotions WHERE offer.id = ?');
-
-    if(!$req->execute([$id]))
-        print_r($bdd->errorInfo());
-    else {
-        $donnees = [];
-        //var_dump(hash('sha256',$password));
-        while($donnee = $req->fetch()) {
-            
-            $donnees[] = $donnee->name;
-        }
-        $req->closeCursor();
-        return $donnees;
-        echo 'No Result';
-        
-    }
-    
-
-}
-
-
-static function getLocation() {
-
-    include('loginBDD.php');
-    $req = $bdd->prepare('SELECT DISTINCT locality_offer FROM `offer`');
-
-    if(!$req->execute())
-        print_r($bdd->errorInfo());
-    else {
-        $donnees = [];
-        //var_dump(hash('sha256',$password));
-        while($donnee = $req->fetch()) {
-            
-            $donnees[] = $donnee->locality_offer;
-        }
-        $req->closeCursor();
-        return $donnees;
-        echo 'No Result';
-        
-    }
 
 
 
 }
 
-
+}
 }

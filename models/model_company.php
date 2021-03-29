@@ -1,8 +1,8 @@
 <?php
 
+class model_get_company {
 
-
-function getCompany(){
+static function getCompany(){
 
 
     include('loginBDD.php');
@@ -28,7 +28,7 @@ function getCompany(){
 
 
 
-function getCompanyName(){
+static function getCompanyName(){
 
 
     include('loginBDD.php');
@@ -49,5 +49,7 @@ function getCompanyName(){
             
         }
 
+
+}
 
 }

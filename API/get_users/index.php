@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Entêtes autorisées
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    echo json_encode(get_all_user(empty($_GET['role']) ?: $_GET['role']));
+    echo json_encode(API_get_user::get_all_user(empty($_GET['role']) ?: $_GET['role']));
 
 
     // On encode en json et on envoie
@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 
+class API_get_user {
 
-
-function get_all_user($role = "null")
+static function get_all_user($role = "null")
 {
 
     include('../../models/loginBDD.php');
@@ -79,4 +79,6 @@ function get_all_user($role = "null")
 
     //$tableauUsers['nbrResult'] = $result;
     return $tableauUsers;
+}
+
 }
