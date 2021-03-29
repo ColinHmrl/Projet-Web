@@ -52,7 +52,7 @@ if($count>0) {
 
     }
 }
-    var_dump($stringSQL);
+
     $req = $bdd->prepare($stringSQL);// WHERE email = ? AND password = ?');
 
     if(!$req->execute($tableValue))

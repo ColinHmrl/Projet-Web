@@ -12,7 +12,6 @@
 
 {% block body %}
 
-<button type="button" id="btn_jquery">oui</button>
 <div class="container">
 
 
@@ -22,6 +21,7 @@
             <th>First_Name</th>
             <th>Second_Name</th>
             <th>Roles</th>
+            <th>Email</th>
         </tr>
     </thead>
     <tbody id="user_result">
@@ -32,4 +32,80 @@
 </div>
 
 <script src="/scripts/get_users.js"></script>
+<script>
+    $(document).ready( function () {
+    $.ajax({
+        url: "http://monprojet.fr/API/get_users/?role={{role}}",
+        type: "GET",
+        //data: { name: "your_name", job: "what_you_want", place: "where_you_want" },
+        dataType:"json", 
+        success: function (response, textStatus, xhr) {
+            var html = '';
+            var users = [];
+            if (xhr.status == 200) {
+
+                //html += JSON.stringify(response) +"</br>";
+                
+                $.each(response, function(firstIndex, firstElement) {
+
+                    //html+="<p>element at " + index + ": " + el + "</p>";
+                    
+                    if(firstIndex=="users") {
+                        $.each(firstElement, function(indexUser, elementUser) {
+                            //html+="<tr>";
+                            
+                                
+                                /*html+="<td>"+elementUser.first_name+"</td>";
+                                html+="<td>"+elementUser.last_name+"</td>";
+                                html+="<td>"+elementUser.roles+"</td>";*/
+                                users.push({
+                                    "first_name" : elementUser.first_name,
+                                    "last_name" : elementUser.last_name,
+                                    "roles" : elementUser.roles,
+                                    "email" : elementUser.email
+                                });
+
+                            
+                            //html+="</tr>";
+                        });
+                    }
+                });
+                
+            }
+            else {
+            }
+
+            $.each(users, function(index,element){
+                    html+="<tr>";
+                            
+                                
+                    html+="<td>"+element.first_name+"</td>";
+                    html+="<td>"+element.last_name+"</td>";
+                    html+="<td>"+element.roles+"</td>";
+                    html+="<td>"+element.email+"</td>";
+                    html+="</tr>";
+            })
+            $('#user_result').html(html);
+            $('#table_user').DataTable();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            $('#user_result').html('Error: ' + xhr.status); console.log(thrownError);
+        }
+    });
+
+    
+
+});
+
+class Users {
+  constructor(first_name, last_name, roles, email) {
+    this.first_name = first_name; 
+    this.last_name = last_name;
+    this.roles = roles;
+    this.email = email;
+  }
+
+
+}
+</script>
 {% endblock %}

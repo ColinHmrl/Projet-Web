@@ -8,4 +8,7 @@ $twig = new \Twig\Environment($loader, [
     'cache' => false, //__DIR__.'/cache'
 ]);
 
-echo $twig->render('search_user.html');
+if(!empty($_GET['user_role']))
+    echo $twig->render('search_user.html',['role' => $_GET['user_role']]);
+else
+    echo $twig->render('search_user.html');
