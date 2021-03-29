@@ -25,6 +25,8 @@ function get_locality(){
     return($result);
 
 
+
+
 }
 function print_var_name($var) {
     foreach($GLOBALS as $var_name => $value) {
@@ -36,6 +38,100 @@ function print_var_name($var) {
     return false;
 }
 
+class modele_search_company {
+    static function getSkills($id) {
+
+        include('loginBDD.php');
+        $req = $bdd->prepare('SELECT skills.name FROM offer INNER JOIN need ON need.id_offer = offer.id INNER JOIN skills ON skills.id = need.id_skills WHERE offer.id = ?');
+
+        if(!$req->execute([$id]))
+            print_r($bdd->errorInfo());
+        else {
+            //var_dump(hash('sha256',$password));
+            if($donnees = $req->fetchAll()) {
+                $req->closeCursor();
+                return $donnees;
+            }
+            echo 'No Result';
+        
+        }
+    
+
+    }
+    static function getCompany($tab){
+
+        include('loginBDD.php');
+
+        $stringSQL = 'SELECT * FROM (SELECT * FROM company';
+
+
+        $count = count($tab);
+        
+
+        if($count>0) {
+            $stringSQL .= ' WHERE step = 6 ';
+            foreach($tab as $value => $key) {
+                $stringSQL .= ' AND '; 
+                switch($value) {
+                    default:
+                        $stringSQL .= " ' ".$value." ' = '".$key."'";
+                    
+                    
+                    break;
+                    
+                    case "trainee_score":
+                        $stringSQL .= " ' ".$value."' <= '".$key."'";
+
+                    break ;
+                    case "number_of_trainee":
+                        $stringSQL .= " ' ".$value."' <= '".$key."'";
+
+                    break ;
+                    case "pilotScore":
+                        $stringSQL .=" ' ". $value."' <= '".$key."'";
+
+                    break ;
+
+
+                }
+            }
+        }
+        $stringSQL .= ") t1 
+LEFT JOIN 
+(SELECT company.id as id, AVG(rating) as rateStudent
+FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN users on can_rate.id_users = users.id 
+WHERE roles = 'student') t2
+ON (t1.id = t2.id)
+LEFT JOIN 
+(SELECT company.id as id, AVG(rating) as ratePilot
+FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN users on can_rate.id_users = users.id 
+WHERE roles = 'pilot') t3
+ON (t1.id = t3.id)
+LEFT JOIN
+(SELECT company.id,COUNT(step)as number_of_trainee 
+FROM offer INNER JOIN company on offer.id = company.id INNER JOIN wishlist on wishlist.id_offer = offer.id) t4
+ON (t1.id = t4.id)
+
+";
+
+        
+        echo $stringSQL;
+        //echo '<br>';
+        $prepared = $bdd->prepare($stringSQL);
+        $prepared->execute();
+        $result = $prepared->fetchAll();
+        //var_dump($result);
+        return $result;
+    }
+}
+
+
+
+
+
+
+
+/*
 function search_company(){
     $numargs = func_num_args();
     $arg_list = func_get_args();
@@ -104,5 +200,29 @@ function search_company(){
         die();
     }
 }
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
 

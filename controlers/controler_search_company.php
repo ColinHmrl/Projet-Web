@@ -9,7 +9,14 @@ $twig = new \Twig\Environment($loader, [
     'cache' => false, //__DIR__.'/cache'
 ]);
 
+$twig->addFunction(new \Twig\TwigFunction('getCompany', function ($id) {
+    return modele_search_company::getCompany($id);
+}));
 
+$functionSkills = new \Twig\TwigFunction('getSkills', function ($id) {
+    return modele_search_company::getSkills($id);
+});
+$twig->addFunction($functionSkills);
 
 $result = get_activity();
 $outputActivityArea = '';
@@ -35,44 +42,113 @@ foreach ($result as $e){
 }
 
 
-echo $twig->render('search_company.html',['activity_area' => $outputActivityArea,'skills' => $outputSkills, 'locality' => $outputLocality]);
 
-if(isset($_GET['companyName'])){
 
-    search_company(array($_GET['companyName'],$_GET['activityArea'],$_GET['locality'],$_GET['skills'],$_GET['numberOfTrainee'],$_GET['traineeScore'],$_GET['PilotScore']));
+if(isset($_SESSION['user'])) {
+
+      
+
+    $table = [];
+    
+    if(!empty($_GET['companyName']))
+        $table['name'] = $_GET['companyName'];
+    if(!empty($_GET['activityArea']))
+        $table['activity_area'] = $_GET['activityArea'];
+    if(!empty($_GET['locality']))
+        $table['locality'] = $_GET['locality'];
+    if(!empty($_GET['skills']))
+        $table['skills'] = $_GET['skills'];
+    if(!empty($_GET['numberOfTrainee']))
+        $table['number_of_trainee'] = $_GET['numberOfTrainee'];
+        /*
+    if(!empty($_GET['traineeScore']))
+        $table['trainee_score'] = $_GET['traineeScore'];
+    if(!empty($_GET['pilotScore']))
+        $table['pilot_score'] = $_GET['pilotScore'];     */   
+        
+            
+    if(!empty($_GET['traineeScore'])){
+        $v = 0;
+        switch($_GET['traineeScore']){
+            default :
+                $v = 4;
+            break;
+            case "A":
+            $v = 1;
+            break;
+            case "B":
+            $v = 2;
+            break;
+            case "C":
+            $v = 3;
+            break;
+            case "D":
+            $v = 4;
+            break;
+            $table['trainee_score'] = $v;
+        } 
+    }
+    if(!empty($_GET['PilotScore'])){
+        $v = 0;
+        switch($_GET['pilotScore']){
+            default :
+                $v = 0;
+            break;
+            case "A":
+            $v = 3;
+            break;
+            case "B":
+            $v = 2;
+            break;
+            case "C":
+            $v = 1;
+
+            break;
+            $table['pilot_score'] = $v;
+        } 
+    }
+     
+    
+    echo $twig->render('search_company.html',['activity_area' => $outputActivityArea,
+                                              'skills' => $outputSkills,
+                                              'locality' => $outputLocality,
+                                              'result'=>modele_search_company::getCompany($table)
+                                              ]);
 
 }
 
 
 
-    '
-    <div class="row">
-        <h2 class="col-12">Nom de l\'entreprise</h2>
 
-        <div class="col-6">
 
-            <p class="row">Localité</p>
-            <p class="row">Secteur d\'activité</p>
-            <div>
-                <h4 class="row"> Competences :</h4>
-                <p class="row">compétence 1</p>
-                <p class="row">compétence 2</p>
-                <p class="row">compétence 3</p>
 
-            </div>
-            <p class="row">Nombre de stagiaire deja engagé</pclass="row">
-            <p class="row">Eval des stagiaires </p>
-            <p class="row">Eval des tuteurs  : </p>
 
-        </div>
-        <div class="col-6">
-            <h4 class="row">Description</h4>
-            <p class="row">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
-            </p>
-        </div>
-    </div>
-    '
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

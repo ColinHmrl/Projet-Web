@@ -57,7 +57,7 @@ if(isset($_SESSION['user'])) {
         $table['offer_date'] = $_GET['offer_date'];
         
     
-    echo $twig->render('search_offer.html',['tab'=>getCompanyName(),'result'=>modele_search_offer::getOffer($table),'locations' => modele_search_offer::getLocation(),'data' => $table]);
+    echo $twig->render('search_offer.html',['result'=>getCompany($table)]);
 
 
 }
