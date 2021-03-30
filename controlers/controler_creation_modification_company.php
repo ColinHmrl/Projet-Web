@@ -27,7 +27,13 @@ if(isset($_GET['id'])){
         //destination post modification
         echo 'updated';
         //echo twig
-        update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']);        //destination post cr�ation
+        update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
+        
+        
+        
+        
+        //destination post cr�ation
+
 
     }else{
         echo 'created';
