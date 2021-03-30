@@ -3,27 +3,6 @@
 class Company {
 
 
-        include('loginBDD.php');
-        
-            $req = $bdd->prepare('SELECT * FROM company');// WHERE email = ? AND password = ?');
-    
-            if(!$req->execute())
-                print_r($bdd->errorInfo());
-            else {
-                //var_dump(hash('sha256',$password));
-                if($donnees = $req->fetchAll()) {
-                    $req->closeCursor();
-                    return $donnees;
-                }
-                echo 'erreur';
-            
-            
-            
-            }
-
-
-        }
-    }
 
     static function get_company_by_id($id){ // get one company by id 
         try{
@@ -108,7 +87,7 @@ class Stats{
             $prepared = $bdd->prepare($sql);
 
             if(!$prepared->execute([
-                ':id_company' => $id,
+                ':id_company' => $id_company,
                 ':rate' => $rate,
                 ':role' => $role
             ])){
@@ -136,7 +115,7 @@ class Stats{
         $c= self::get_count_rating($id_company,'C',$role);
         $d= self::get_count_rating($id_company,'D',$role);
 
-       return $a*5+$b*4+$c*2+$d*1;
+       return ($a*5+$b*4+$c*2+$d*1)/($a+$b+$c+$d);
     }
     
 }
