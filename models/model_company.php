@@ -1,8 +1,7 @@
 <?php
+class model_get_company {
 
-class Company {
-
-    static function getCompany(){//all Company
+    static function getCompany(){
 
 
         include('loginBDD.php');
@@ -24,7 +23,56 @@ class Company {
             }
 
 
-        }
+    }
+
+
+
+    static function getCompanyName(){
+
+
+        include('loginBDD.php');
+        
+            $req = $bdd->prepare('SELECT * FROM company');// WHERE email = ? AND password = ?');
+    
+            if(!$req->execute())
+                print_r($bdd->errorInfo());
+            else {
+                //var_dump(hash('sha256',$password));
+                $tab = [];
+
+                while($donnees = $req->fetch()) {
+                    $tab[] = $donnees->name;
+                }
+                $req->closeCursor();
+                return $tab;
+            
+            }
+
+
+    }
+
+}
+
+class Company {
+
+    static function getCompany(){//all Company data
+
+
+        include('loginBDD.php');
+        
+        $req = $bdd->prepare('SELECT * FROM company');// WHERE email = ? AND password = ?');
+    
+        if(!$req->execute())
+            print_r($bdd->errorInfo());
+        else {
+            //var_dump(hash('sha256',$password));
+            if($donnees = $req->fetchAll()) {
+                $req->closeCursor();
+                var_dump($donnees);
+                return $donnees;
+            }
+            echo 'erreur';
+        } 
     }
 
     static function get_company_by_id($id){ // get one company by id 
@@ -87,7 +135,7 @@ class Stats{
 
             if(!$prepared->execute([
                 ':id_company' => $id,
-                ':rate' => $rate;
+                ':rate' => $rate,
                 ':role' => $role
             ])){
                 print_r($bdd->errorInfo());
@@ -109,11 +157,12 @@ class Stats{
     }
     static function rate($role,$id_company){
 
-        $a= get_count_rating($id_company,'A',$role);
-        $b= get_count_rating($id_company,'B',$role);
-        $c= get_count_rating($id_company,'C',$role);
-        $d= get_count_rating($id_company,'D',$role);
+        $a = get_count_rating($id_company,'A',$role);
+        $b = get_count_rating($id_company,'B',$role);
+        $c = get_count_rating($id_company,'C',$role);
+        $d = get_count_rating($id_company,'D',$role);
 
        return $a*5+$b*4+$c*2+$d*1;
     }
+    
 }

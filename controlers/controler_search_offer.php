@@ -69,7 +69,7 @@ if(isset($_COOKIE['user'])) {
         $table['offer_date'] = $_GET['offer_date'];
         
 
-    echo $twig->render('search_offer.html',['tab'=>model_get_company::getCompanyName(),'result'=>model_search_offer::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id]);
+    echo $twig->render('search_offer.html',['result'=>model_search_offer::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id]);
 
 
 }
