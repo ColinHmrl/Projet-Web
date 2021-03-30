@@ -22,7 +22,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Entêtes autorisées
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    echo json_encode(API_get_user::get_all_user(empty($_GET['role']) ?: $_GET['role']));
+    if(!empty($_GET["user"]) && !empty($_GET["token"])) {
+
+
+
+        if(API_get_user::verifUser($_GET["user"], $_GET["token"])) {
+            echo json_encode(API_get_user::getAllUser(empty($_GET['role']) ?: $_GET['role']));
+        }
+        else {
+            http_response_code(403);
+            echo json_encode(["message" => "token invalide"]);
+        }
+        
+
+
+    }
+    else {
+        http_response_code(403);
+        echo json_encode(["message" => "token invalide"]);
+    }
+    
 
 
     // On encode en json et on envoie
@@ -40,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 class API_get_user {
 
-static function get_all_user($role = "null")
+static function getAllUser($role = "null")
 {
 
     include('../../models/loginBDD.php');
@@ -80,5 +99,22 @@ static function get_all_user($role = "null")
     //$tableauUsers['nbrResult'] = $result;
     return $tableauUsers;
 }
+
+static function verifUser($user,$password) {
+
+
+    include('../../models/loginBDD.php');
+        
+        $req = $bdd->prepare('SELECT id FROM users WHERE email = ? AND password = ?');// WHERE email = ? AND password = ?');
+    
+        if(!$req->execute([$user,$password]))
+            print_r($bdd->errorInfo());
+        else {
+            //var_dump(hash('sha256',$password));
+            return $req->fetch() ? true : false;        
+            
+            
+        }
+    }
 
 }

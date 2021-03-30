@@ -13,22 +13,22 @@ if(isset($_GET['deco'])) {
     echo 'Vous vous êtes déconnecté';
     header('Location: index.php'); 
 }
+else {
 
 
 
-
-if(isset($_COOKIE['user'])) {
-    echo $twig->render('search_user.html', ['test' => 'Bienvenue '.unserialize($_COOKIE['user'])->first_name]);
+if(!empty($_COOKIE['user'])) {
+    header('Location: controlers/controler_search_offer.php');
 }
 else {
 
     if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])) {
 
         require 'models/model_login.php';
-        \Requetes\loginUser($_POST['inputEmail'],$_POST['inputPassword']);
+        
 
-        if(isset($_COOKIE['user'])) {
-            echo $twig->render('search_user.html', ['test' => 'Bienvenue '.unserialize($_COOKIE['user'])->first_name]);
+        if(\Requetes\model_login::loginUser($_POST['inputEmail'],$_POST['inputPassword'])) {
+            header('Location: index.php'); 
         }  
         else {
             echo $twig->render('login.html', ['errorlogin' => 'Erreur, mauvais mot de passe ou email','email' => $_POST['inputEmail']]);
@@ -43,3 +43,4 @@ else {
 
 }
 
+}
