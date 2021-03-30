@@ -62,7 +62,7 @@ class modele_search_company {
 
         include('loginBDD.php');
 
-        $stringSQL = 'SELECT * FROM (SELECT * FROM company';
+        $stringSQL = 'SELECT * FROM (SELECT  id as ID,name,activity_area,locality,email,invisible,del,description FROM company';
 
 
         $count = count($tab);
@@ -108,14 +108,14 @@ FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN 
 WHERE roles = 'pilot') t3
 ON (t1.id = t3.id)
 LEFT JOIN
-(SELECT company.id,COUNT(step)as number_of_trainee 
+(SELECT company.id as id,COUNT(step)as number_of_trainee 
 FROM offer INNER JOIN company on offer.id = company.id INNER JOIN wishlist on wishlist.id_offer = offer.id) t4
 ON (t1.id = t4.id)
 
 ";
 
         
-        echo $stringSQL;
+        //echo $stringSQL;
         //echo '<br>';
         $prepared = $bdd->prepare($stringSQL);
         $prepared->execute();

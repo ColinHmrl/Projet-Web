@@ -66,27 +66,32 @@
     {% for item in result %}
 
     <div class="row">
+        <a class="col-12" href="controler_profil_company.php?id={{item.ID | raw}}">
+            <h2 >{{item.name}}</h2>
+        </a>
         
-        <h2 class="col-12">{{item.name}}</h2>
 
         <div class="col-6">
 
             <p class="row">Locality : {{item.locality}}</p>
             <p class="row">Activity Area : {{item.activity_area}}</p>
-            <div>
-                <h4 class="row">Skills :</h4>
-                {% for skill in getSkills(item.id) %}
-                <p class="row">{{skill.name}}</p>
-                {% endfor %}
+            <!--
+    <div>
+        <h4 class="row">Skills :</h4>
+        {% for skill in getSkills(item.id) %}
+        <p class="row">{{skill.name}}</p>
+        {% endfor %}
 
 
-            </div>
-            <div>
-                <h4 class="row ">Stats :</h4>
-                <p class="row">Trainee Hired : {{item.number_of_trainee | default('0')}}</p>
-                <p class="row">Trainee Score : {{4 - item.rateStudent}}</p>
-                <p class="row">Pilot Score : {{4 - item.ratePilot}}</p>
-            </div>
+    </div>
+    <div>
+        <h4 class="row ">Stats :</h4>
+        <p class="row">Trainee Hired : {{item.number_of_trainee | default('0')}}</p>
+        <p class="row">Trainee Score : {{4 - item.rateStudent}}</p>
+        <p class="row">Pilot Score : {{4 - item.ratePilot}}</p>
+    </div>
+    -->
+
 
 
         </div>
@@ -95,7 +100,7 @@
             <p class="row">{{ item.description}}</p>
         </div>
         <div class="row">
-            <a class="col" href="controler_creation_modification_company.php?id={{item.id}}"><button>Modifier</button></a>
+            <a class="col" href="controler_creation_modification_company.php?id={{item.ID}}"><button>Modifier</button></a>
         </div>
         
     </div>
