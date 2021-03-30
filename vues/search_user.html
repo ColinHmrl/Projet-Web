@@ -11,7 +11,6 @@
 {% endblock %}
 
 {% block body %}
-
 <div class="container">
 
 
@@ -36,7 +35,7 @@
 <script>
     $(document).ready( function () {
     $.ajax({
-        url: "http://internship-finder.fr/API/get_users/?role={{role}}",
+        url: "http://internship-finder.fr/API/get_users/?role={{role}}&user={{user.email}}&token={{user.password}}",
         type: "GET",
         //data: { name: "your_name", job: "what_you_want", place: "where_you_want" },
         dataType:"json", 

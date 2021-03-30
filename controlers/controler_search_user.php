@@ -9,10 +9,20 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 
+if(!empty($_COOKIE['user'])) {
+
 //get droit
-$droitmodif = isset($_COOKIE['user']) ? true : false;
+$droitmodif = !empty($_COOKIE['user']) ? true : false;
 
 if(!empty($_GET['user_role']))
-    echo $twig->render('search_user.html',['role' => $_GET['user_role'], 'droitmodif' => $droitmodif]);
+    echo $twig->render('search_user.html',['role' => $_GET['user_role'], 'droitmodif' => $droitmodif, 'user' => unserialize($_COOKIE['user'])]);
 else
-    echo $twig->render('search_user.html',['droitmodif' => $droitmodif]);
+    echo $twig->render('search_user.html',['droitmodif' => $droitmodif, 'user' => unserialize($_COOKIE['user'])]);
+
+
+}
+else {
+
+    echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
+
+}

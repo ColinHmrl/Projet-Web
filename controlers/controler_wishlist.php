@@ -66,12 +66,12 @@ if(isset($_COOKIE['user'])) {
         $table['offer_date'] = $_GET['offer_date'];
         
     //var_dump(model_wishlist::getOffer($table));
-    echo $twig->render('wishlist.html',['tab'=>model_get_company::getCompanyName(),'result'=>model_wishlist::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'titre' => 'Wishlist']);
+    echo $twig->render('wishlist.html',['tab'=>company::getCompanyName(),'result'=>model_wishlist::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'titre' => 'Wishlist']);
 
 
 }
 else {
 
-            echo "error : veuillez vous login... (redirect dans 3s) <a href='http://internship-finder.fr'>Login</a>";
+    echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
 }
 ?>
