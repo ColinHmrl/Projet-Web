@@ -79,7 +79,7 @@
             $.each(users, function(index,element){
                     html+="<tr>";
                     {% if droitmodif == 1 %}       
-                    html+="<td><a href='http://internship-finder.fr/controlers/controler_create_user.php?id="+element.id+"'>id="+element.id+"</a></td>";
+                    html+="<td><a href='http://internship-finder.fr/controlers/controler_profil_user.php?id="+element.id+"'>id="+element.id+"</a></td>";
                     {% else %}
                     html+="<td>id="+element.id+"</td>";
                     {% endif %}   

@@ -58,11 +58,11 @@ class modele_search_company {
     
 
     }
-    static function getCompany($tab){
+    static function getCompany($tab){// selection via recherche dans search company 
 
         include('loginBDD.php');
 
-        $stringSQL = 'SELECT * FROM (SELECT * FROM company';
+        $stringSQL = 'SELECT * FROM (SELECT  id as ID,name,activity_area,locality,email,invisible,del,description FROM company';
 
 
         $count = count($tab);
@@ -108,113 +108,18 @@ FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN 
 WHERE roles = 'pilot') t3
 ON (t1.id = t3.id)
 LEFT JOIN
-(SELECT company.id,COUNT(step)as number_of_trainee 
+(SELECT company.id as id,COUNT(step)as number_of_trainee 
 FROM offer INNER JOIN company on offer.id = company.id INNER JOIN wishlist on wishlist.id_offer = offer.id) t4
 ON (t1.id = t4.id)
 
 ";
-
-        
-        echo $stringSQL;
-        //echo '<br>';
         $prepared = $bdd->prepare($stringSQL);
         $prepared->execute();
         $result = $prepared->fetchAll();
-        //var_dump($result);
+        
         return $result;
     }
 }
-
-
-
-
-
-
-
-/*
-function search_company(){
-    $numargs = func_num_args();
-    $arg_list = func_get_args();
-
-    $name;
-    $activity_area;
-    $locality;
-    $skills;
-    $numberOfTrainee;
-    $traineeScore;
-    $PilotScore;
-
-
-    include('loginBDD.php');
-
-    try {
-        
-        $sql = "
-        SELECT id,name,description,activity_area,locality,email,skills,COUNT(step)as trainee 
-        FROM offer INNER JOIN company on offer.id = company.id INNER JOIN wishlist on wishlist.id = offer.id
-        WHERE step = 6";
-        for ($i = 0; $i < $args; $i++) {
-            
-        }
-        if ($name!= NULL){
-            $sql .= "AND name = :".$name;
-        }
-        if ($activity_area != NULL){
-            $sql .= "AND activity_area = :".$activity_area;
-        }
-        if ($skills != NULL){
-            $sql .= "AND skills = :".$skills;
-        }
-        if ($numberOfTrainee != NULL){
-            $sql .= "AND trainee >= :".$numberOfTrainee;
-        }
-        
-        if ($traineeScore != NULL){
-            $sql .= "AND traineeScore >= :".$traineeScore;
-        }
-
-        if ($PilotScore != NULL){
-            $sql .= "AND PilotScore >= :".$PilotScore;
-        }
-
-        
-         
-        
-
-
-        $prepared = $bdd->prepare($sql);
-        $prepared->execute([
-
-            ':name' => $name,
-            ':activity_area' => $activity_area,
-            ':locality' => $locality,
-            ':email' => $email,
-            ':invisible' => 0,
-            ':del' => 0,
-            ':description' => $description,
-            ':id'=> $id
-        ]);
-    }
-    catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
-        die();
-    }
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -134,6 +134,7 @@ class User{
                 die('Erreur : '.$e->getMessage());
         }
     }
+    
 }
 
 class Center{
@@ -174,6 +175,31 @@ class Center{
             if ($cent->id == $id){
                 return $cent->name;
             }
+        }
+    }
+    static function get_center($id){
+        try{
+            include('loginBDD.php');
+            $sql = "SELECT centers.name FROM users INNER JOIN centers on users.id_centers = centers.id WHERE users.id = :id";
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute([
+                ':id' => $id
+            ])){
+                print_r($bdd->errorInfo());
+            }
+
+            $result = $prepared->fetch();
+            return $result;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
         }
     }
 }
@@ -247,6 +273,32 @@ class Promotion{
         }
     }
 
+    static function get_promo($id){
+        try{
+            include('loginBDD.php');
+            $sql = "SELECT promotions.name FROM promotions INNER JOIN users_promotions on promotions.id = users_promotions.id_promotions INNER JOIN users on users.id = users_promotions.id_users WHERE users.id = :id";
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute([
+                ':id' => $id
+            ])){
+                print_r($bdd->errorInfo());
+            }
+
+            $result = $prepared->fetch();
+            return $result;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+    }
+
 }
 class Rights{
 
@@ -315,6 +367,102 @@ class Rights{
         if($req->fetch()) return true;
         else return false;
     }
+}
+
+
+class Stats{
+    static function get_nbr_in_wishlist($id){
+        try{
+            include('loginBDD.php');
+            $sql = "SELECT COUNT(id_users) as count FROM users INNER JOIN wishlist on wishlist.id_users = users.id WHERE users.id = :id";
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute([
+                ':id' => $id
+            ])){
+                print_r($bdd->errorInfo());
+            }
+
+            $result = $prepared->fetch();
+            return $result;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+    }
+    static function get_nbr_student_in_charge($id){
+        try{
+            include('loginBDD.php');
+            $sql = "SELECT COUNT('users.id') as count FROM 
+                    (SELECT 'users.id' as id FROM users INNER JOIN users_promotions on users_promotions.id_users = users.id WHERE users.roles = 'student') t1
+                    LEFT JOIN
+                    (SELECT 'id_promotions' as id FROM users INNER JOIN users_promotions on users.id = users_promotions.id_users WHERE users.id = :id) t2
+                    ON (t1.id = t2.id)";
+
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute([
+                ':id' => $id
+            ])){
+                print_r($bdd->errorInfo());
+            }
+
+            $result = $prepared->fetch();
+            return $result;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+    }
+    static function get_nbr_student_got_internship($id){
+        try{
+            include('loginBDD.php');
+            $sql = "SELECT count(id) as count FROM 
+                    (SELECT users.id as id, users.id_centers as id_center,users_promotions.id_promotions as id_promo FROM users INNER JOIN users_promotions on users_promotions.id_users = users.id INNER JOIN wishlist on wishlist.id_users = users.id WHERE users.roles = 'student' AND wishlist.step = 6) t1
+                    LEFT JOIN 
+                    (SELECT id_promotions as id_des_promos FROM users INNER JOIN users_promotions on users.id = users_promotions.id_users WHERE users.id = :id ) t2
+                    ON (t1.id_promo = t2.id_des_promos)
+                    RIGHT JOIN 
+                    (SELECT id_centers FROM users  WHERE users.id = :id) t3
+                    ON (t1.id_center = t3.id_centers)";
+
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute([
+                ':id' => $id
+            ])){
+                print_r($bdd->errorInfo());
+            }
+            
+            $result = $prepared->fetch();
+            return $result;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+    }
+
+
+
+
 }
 
 ?>

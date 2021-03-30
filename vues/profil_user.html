@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% block links %}
+<link href="http://statistics-of-internship-finder.fr/styles/create_company.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h3 class="row">{{last_name | upper}} {{first_name}}</h3>
+            <p class="row">Role : {{roles}}</p>
+            <p class="row">Email : {{email}}</p>
+            <p class="row">Center : {{center}}</p>
+            <p class="row">Promotion : {{promotion}}</p>
+        </div>
+        <div class="col-6">
+            <h3 class="row">Statistiques :</h3>
+
+            {% if roles == 'student' %}
+
+            <p class="row"> Number of offer in wishlist : {{nbr_wishlist | default('0')}}</p>
+
+            {% elseif roles == 'pilot' or 'deleguate' %}
+
+            <p class="row"> Number of Student in charge of : {{nbr_student_in_charge | default('0')}}</p>
+            <p class="row"> Number of Student who got an internship : {{nbr_student_got_internship | default('0')}}</p>
+
+            {% endif %}
+
+        </div>
+         
+                                                                   
+    </div>
+
+ 
+    <div class="row">
+        <div class="col-6">
+            <a href="controler_creation_modification_company.php?id={{id}}"><button>Modifier</button></a>
+        </div>
+        <div class="col-6">
+            <a href=""><button>Supprimer</button></a>
+        </div>
+    </div>
+        
+
+
+    
+
+
+
+</div>
+{% endblock %}
