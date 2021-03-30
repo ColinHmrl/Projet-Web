@@ -9,7 +9,7 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 
-// arrivé sur la page 
+// arrivï¿½ sur la page mofification
 if(isset($_GET['id'])){
     
         $result = get_company($_GET['id']);
@@ -26,7 +26,7 @@ if(isset($_GET['id'])){
     if($_POST['id']){
         //destination post modification
         echo 'updated';
-        update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']);        //destination post création
+        update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']);        //destination post crï¿½ation
 
     }else{
         echo 'created';
@@ -36,7 +36,7 @@ if(isset($_GET['id'])){
 
 
 
-    //création
+    //crï¿½ation
     echo $twig->render('creation_modification_company.html',[
     'titre'=> 'Creation Entreprise'
     ]);
