@@ -66,7 +66,7 @@ if(isset($_COOKIE['user'])) {
         $table['offer_date'] = $_GET['offer_date'];
         
     //var_dump(model_wishlist::getOffer($table));
-    echo $twig->render('wishlist.html',['tab'=>model_get_company::getCompanyName(),'result'=>model_wishlist::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id]);
+    echo $twig->render('wishlist.html',['tab'=>model_get_company::getCompanyName(),'result'=>model_wishlist::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'titre' => 'Wishlist']);
 
 
 }

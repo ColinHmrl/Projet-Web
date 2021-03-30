@@ -1,0 +1,59 @@
+{% extends "index.html" %}
+{% block links %}
+<link href="http://statistics-of-internship-finder.fr/styles/create_company.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div class="container">
+    
+
+    <div class="row">
+
+        <h2 class="col-12">{{result.name}}</h2>
+
+        <div class="col-6">
+
+            <p class="row">Locality : {{result.locality}}</p>
+            <p class="row">Activity Area : {{result.activity_area}}</p>
+            <div>
+                <h4 class="row">Skills :</h4>
+                {% for skill in getSkills(result.id) %}
+                <p class="row">{{skill.name}}</p>
+                {% endfor %}
+
+
+            </div>
+            <div>
+                <h4 class="row ">Stats :</h4>
+                <p class="row">Trainee Hired : {{result.number_of_trainee | default('0')}}</p>
+                <p class="row">Trainee Score : {{4 - result.rateStudent}}</p>
+                <p class="row">Pilot Score : {{4 - result.ratePilot}}</p>
+            </div>
+
+
+        </div>
+        <div class="col-6">
+            <h4 class="row">Description :</h4>
+            <p class="row">{{ result.description}}</p>
+        </div>
+
+    </div>
+
+    
+
+    <div class="row">
+        <div class="col-6">
+            <a href="controler_creation_modification_company.php?id={{result.id}}"><button>Modifier</button></a>
+        </div>
+        <div class="col-6">
+            <a href=""><button>Supprimer</button></a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</div>
+{% endblock %}

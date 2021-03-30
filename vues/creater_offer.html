@@ -18,15 +18,21 @@
                             <div class="col-6">
                                 <div class="row crit">
                                     <label for="Entreprise">Entreprise :</label>
-                                    <input type="text" id="entreprise" name="inputEntreprise">
+                                    <select id="entreprise" name="inputEntreprise">
+                                        {{Company | raw}}
+                                    </select>
                                 </div>
                                 <div class="row crit">
                                     <label for="Location">Location :</label>
                                     <input type="text" id="location" name="inputEntrepriseLocation">
                                 </div>
                                 <div class="row crit">
-                                    <label for="Compétence">Compétence :</label>
-                                    <input type="text" id="compétence" name="inputCompétence">
+                                    <label for="Offer_date">Offer date :</label>
+                                    <input type="text" id="offer_date" name="inputOffer_date">
+                                </div>
+                                <div class="row crit">
+                                    <label for="Training_period">Training period :</label>
+                                    <input type="text" id="training_period" name="inputTraining_period">
                                 </div>
                             </div>
                             <div class="col-6">

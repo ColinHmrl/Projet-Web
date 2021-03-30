@@ -74,7 +74,7 @@ if(isset($_COOKIE['user'])) {
 
 }
 else {
-
-            echo "error : veuillez vous login... (redirect dans 3s) <a href='http://internship-finder.fr'>Login</a>";
+            echo $twig->render('error_page.html');
+            //echo "error : veuillez vous login... (redirect dans 3s) <a href='http://internship-finder.fr'>Login</a>";
 }
 ?>

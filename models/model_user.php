@@ -176,6 +176,31 @@ class Center{
             }
         }
     }
+    static function get_center($id){
+        try{
+            include('loginBDD.php');
+            $sql = "SELECT centers.name FROM users INNER JOIN centers on users.id_centers = centers.id WHERE users.id = :id";
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute([
+                ':id' => $id
+            ])){
+                print_r($bdd->errorInfo());
+            }
+
+            $result = $prepared->fetch();
+            return $result;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+    }
 }
 
 class Promotion{
@@ -244,6 +269,32 @@ class Promotion{
             if ($prom->name == $promo){
                 return $prom->id;
             }
+        }
+    }
+
+    static function get_promo($id){
+        try{
+            include('loginBDD.php');
+            $sql = "SELECT promotions.name FROM promotions INNER JOIN users_promotions on promotions.id = users_promotions.id_promotions INNER JOIN users on users.id = users_promotions.id_users WHERE users.id = :id";
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute([
+                ':id' => $id
+            ])){
+                print_r($bdd->errorInfo());
+            }
+
+            $result = $prepared->fetch();
+            return $result;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
         }
     }
 

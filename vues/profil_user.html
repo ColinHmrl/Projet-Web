@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+{% block links %}
+<link href="http://statistics-of-internship-finder.fr/styles/create_company.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div class="container">
+    <input class="col-12" type="hidden" id="id" name="id" value="{{id}}" requiered>
+    <div class="row">
+
+        <h3 class="col-6">{{last_name | upper}} {{first_name}}</h3> <h2 class="clo-6">Role : {{roles}}</h2>
+
+        <div class="col-12">
+
+            <p class="row">Email : {{email}}</p>
+            <p class="row">Center : {{center}}</p>
+            <p class="row">Promotion : {{promotion}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <h2 class="row">Statistiques :</h2>
+
+
+
+    </div>
+        
+
+
+
+        <div class="row">
+            <div class="col-6">
+                <a href="controler_creation_modification_company.php?id={{id}}"><button>Modifier</button></a>
+            </div>
+            <div class="col-6">
+                <a href=""><button>Supprimer</button></a>
+            </div>
+        </div>
+        
+
+
+    
+
+
+
+</div>
+{% endblock %}
