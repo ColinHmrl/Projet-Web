@@ -286,5 +286,35 @@ class Rights{
                 die('Erreur : '.$e->getMessage());
         }
     }
+
+    static function have_right($id_users, $right_name){
+
+        $id_right = "";
+        foreach (\Right::get_rights("admin") as &$right) {
+            if($right->name == $right_name){
+                $id_right = $right->id;
+            }
+        }
+
+        include('loginBDD.php');
+        try{
+        $req = $bdd->prepare('SELECT * FROM rights WHERE id_right = ? AND id_users = ?');
+            
+            if(!$req->execute([$id_right,$id_users]))
+                print_r($bdd->errorInfo());
+        }
+        catch(\Exception $e)
+        {
+            die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+            die('Erreur : '.$e->getMessage());
+        }
+
+        if($req->fetch()) return true;
+        else return false;
+    }
 }
+
 ?>
