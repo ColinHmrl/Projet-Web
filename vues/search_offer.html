@@ -41,14 +41,14 @@
 
 
         <div class="col-1">
-        <select class="" name="duration" style="height:40px;">
-            <option value="All">All</option>
-            <option value="30" {% if data.training_period==30 %}selected{% endif %}>+1 month</option>
-            <option value="60" {% if data.training_period==60 %}selected{% endif %}>+2 months</option>
-            <option value="90" {% if data.training_period==90 %}selected{% endif %}>+3 months</option>
-            <option value="180" {% if data.training_period==180 %}selected{% endif %}>+6 months</option>
-            <option value="360" {% if data.training_period==360 %}selected{% endif %}>+12 months</option>
-        </select>
+            <select class="" name="duration" style="height:40px;">
+                <option value="All">All</option>
+                <option value="30" {% if data.training_period==30 %}selected{% endif %}>+1 month</option>
+                <option value="60" {% if data.training_period==60 %}selected{% endif %}>+2 months</option>
+                <option value="90" {% if data.training_period==90 %}selected{% endif %}>+3 months</option>
+                <option value="180" {% if data.training_period==180 %}selected{% endif %}>+6 months</option>
+                <option value="360" {% if data.training_period==360 %}selected{% endif %}>+12 months</option>
+            </select>
         </div>
 
         <div class="col-1">
@@ -59,7 +59,7 @@
                 {% endfor %}
             </select>
         </div>
-        
+
 
         <select class="col-1" name="offer_date" style="height:40px;">
             <option value="All">All</option>
@@ -82,7 +82,7 @@
                     document.getElementById("rem_value").innerHTML = "Salary : >" + value + "€";
 
             }, false);
-            
+
         </script>
     </div>
     <div class="row justify-content-center pb-3">
@@ -164,7 +164,7 @@
                 </div>
                 <div class="row p-2">
                     <div class="col">
-                        {{truncate(item.description,300,'',true) ~ "..."}}
+                        {{truncate(item.description,300,'...',true)}}
                     </div>
                 </div>
             </div>
@@ -175,8 +175,11 @@
             <button type="button" class="btn btn-info btn-block">Apply</button>
         </div>
         <div class="col-1">
-            <a href="http://monprojet.fr/controlers/controler_create_company.php" class="logo"><i class="far fa-star"
-                    style="font-size:1.2em"></i></a>
+            {% if isWishlist(id_user,item.id) %}
+            <a href="?remove={{item.id}}" class="logo"><i class="fas fa-star" style="font-size:1.2em"></i></a>
+            {% else %}
+            <a href="?add={{item.id}}" class="logo"><i class="far fa-star" style="font-size:1.2em"></i></a>
+            {% endif %}
         </div>
         <div class="col-6 text-center">
             <button type="button" class="btn btn-info btn-xs">Modifier</button>
@@ -196,6 +199,8 @@
 
         </div>
     </div>
+    {% block addrow %}
+    {% endblock %}
 
 
 
