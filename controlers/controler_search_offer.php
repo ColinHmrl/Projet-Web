@@ -3,6 +3,7 @@ session_start();
 
 require_once '../assets/vendors/autoload.php';
 require '../models/model_company.php';
+require '../models/model_wishlist.php';
 require '../models/model_search_offer.php';
 require '../assets/vendors/function/truncate.php';
 
@@ -13,13 +14,17 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 $functionSkills = new \Twig\TwigFunction('getSkills', function ($id) {
-    return modele_search_offer::getSkills($id);
+    return model_search_offer::getSkills($id);
 });
 $twig->addFunction($functionSkills);
 
 
 $twig->addFunction(new \Twig\TwigFunction('getPromo', function ($id) {
-    return modele_search_offer::getPromo($id);
+    return model_search_offer::getPromo($id);
+}));
+
+$twig->addFunction(new \Twig\TwigFunction('isWishlist', function ($id1,$id2) {
+    return model_wishlist::isWishlist($id1,$id2);
 }));
 
 $functionTruncate = new \Twig\TwigFunction('truncate', function ($text,$length,$r,$ifspace) {
@@ -28,13 +33,18 @@ $functionTruncate = new \Twig\TwigFunction('truncate', function ($text,$length,$
 $twig->addFunction($functionTruncate);
 
 
-if(isset($_SESSION['user'])) {
+if(isset($_COOKIE['user'])) {
 
-    if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])) {
+    if(!empty($_GET['remove'])) {
+        model_wishlist::remove(unserialize($_COOKIE['user'])->id,$_GET['remove']);
+    }
+    if(!empty($_GET['add'])) {
+        model_wishlist::add(unserialize($_COOKIE['user'])->id,$_GET['add']);
     }
 
-    $table = [];
 
+    $table = [];
+    
     if(!empty($_GET['company']))
         $table['name'] = $_GET['company'];
 
@@ -58,13 +68,13 @@ if(isset($_SESSION['user'])) {
     if(!empty($_GET['offer_date']) && (int) $_GET['offer_date'] != 0)
         $table['offer_date'] = $_GET['offer_date'];
         
-    
-    echo $twig->render('search_offer.html',['tab'=>getCompanyName(),'result'=>modele_search_offer::getOffer($table),'locations' => modele_search_offer::getLocation(),'data' => $table]);
+
+    echo $twig->render('search_offer.html',['tab'=>model_get_company::getCompanyName(),'result'=>model_search_offer::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id]);
 
 
 }
 else {
 
-            echo "error : veuillez vous login... (redirect dans 3s) <a href='http://monprojet.fr'>Login</a>";
+            echo "error : veuillez vous login... (redirect dans 3s) <a href='http://internship-finder.fr'>Login</a>";
 }
 ?>

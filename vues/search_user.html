@@ -18,6 +18,7 @@
 <table id="table_user" class="display">
     <thead>
         <tr>
+            <th>ID</th>
             <th>First_Name</th>
             <th>Second_Name</th>
             <th>Roles</th>
@@ -59,6 +60,7 @@
                                 html+="<td>"+elementUser.last_name+"</td>";
                                 html+="<td>"+elementUser.roles+"</td>";*/
                                 users.push({
+                                    "id" : elementUser.id,
                                     "first_name" : elementUser.first_name,
                                     "last_name" : elementUser.last_name,
                                     "roles" : elementUser.roles,
@@ -77,8 +79,11 @@
 
             $.each(users, function(index,element){
                     html+="<tr>";
-                            
-                                
+                    {% if droitmodif == 1 %}       
+                    html+="<td><a href='http://internship-finder.fr/controlers/controler_create_user.php?id="+element.id+"'>id="+element.id+"</a></td>";
+                    {% else %}
+                    html+="<td>id="+element.id+"</td>";
+                    {% endif %}   
                     html+="<td>"+element.first_name+"</td>";
                     html+="<td>"+element.last_name+"</td>";
                     html+="<td>"+element.roles+"</td>";
