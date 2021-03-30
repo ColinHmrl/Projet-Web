@@ -1,8 +1,8 @@
 <?php
 
 class Company {
-
-
+    /*
+    static function 
         include('loginBDD.php');
         
             $req = $bdd->prepare('SELECT * FROM company');// WHERE email = ? AND password = ?');
@@ -23,7 +23,7 @@ class Company {
 
 
         }
-    }
+    }*/
 
     static function get_company_by_id($id){ // get one company by id 
         try{
@@ -108,7 +108,7 @@ class Stats{
             $prepared = $bdd->prepare($sql);
 
             if(!$prepared->execute([
-                ':id_company' => $id,
+                ':id_company' => $id_company,
                 ':rate' => $rate,
                 ':role' => $role
             ])){
@@ -136,7 +136,7 @@ class Stats{
         $c= self::get_count_rating($id_company,'C',$role);
         $d= self::get_count_rating($id_company,'D',$role);
 
-       return $a*5+$b*4+$c*2+$d*1;
+       return ($a*5+$b*4+$c*2+$d*1)/($a+$b+$c+$d);
     }
     
 }
