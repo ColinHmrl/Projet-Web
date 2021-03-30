@@ -11,16 +11,19 @@
 
     if(isset($_GET['id'])){
         $result = Requetes\User::get_user($_GET['id']);
-        var_dump($result);
-         echo $twig->render('profil_user.html',[
+        
+        echo $twig->render('profil_user.html',[
                                                  'id' => $_GET['id'],
                                                  'first_name' => $result->first_name,
                                                  'last_name' => $result->last_name,
                                                  'email' => $result->email,
                                                  'center' => Requetes\Center::get_center($_GET['id'])->name,
                                                  'promotion' => Requetes\Promotion::get_promo($_GET['id'])->name,
-                                                 'roles' => $result->roles
-
+                                                 'roles' => $result->roles,
+                                                 'nbr_wishlist' => Requetes\Stats::get_nbr_in_wishlist($_GET['id'])->count,
+                                                 'nbr_student_in_charge' => Requetes\Stats::get_nbr_student_in_charge($_GET['id'])->count,
+                                                 'nbr_student_got_internship' => Requetes\Stats::get_nbr_student_got_internship($_GET['id'])->count
+                                                 
                                                  ]);
     }
 

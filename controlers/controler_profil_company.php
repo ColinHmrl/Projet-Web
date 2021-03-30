@@ -10,18 +10,18 @@
     ]);
 
     $functionSkills = new \Twig\TwigFunction('getSkills', function ($id) {
-        return model_get_company::getSkills($id);
+        return Company::getSkills($id);
     });
     $twig->addFunction($functionSkills);
 
     $twig->addFunction(new \Twig\TwigFunction('getCompany', function ($id) {
-        return model_get_company::getCompany($id);
+        return Company::getCompany($id);
     }));
 
 
     if(isset($_GET['id'])){
         echo $twig->render('profil_company.html',[
-                                                 'result'=>model_get_company::get_company_by_id($_GET['id'])
+                                                 'result'=>Company::get_company_by_id($_GET['id'])
                                                  ]);
     }
 

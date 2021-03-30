@@ -4,36 +4,42 @@
 {% endblock %}
 {% block body %}
 <div class="container">
-    <input class="col-12" type="hidden" id="id" name="id" value="{{id}}" requiered>
     <div class="row">
-
-        <h3 class="col-6">{{last_name | upper}} {{first_name}}</h3> <h2 class="clo-6">Role : {{roles}}</h2>
-
-        <div class="col-12">
-
+        <div class="col-6">
+            <h3 class="row">{{last_name | upper}} {{first_name}}</h3>
+            <p class="row">Role : {{roles}}</p>
             <p class="row">Email : {{email}}</p>
             <p class="row">Center : {{center}}</p>
             <p class="row">Promotion : {{promotion}}</p>
         </div>
-    </div>
-    <div class="row">
-        <h2 class="row">Statistiques :</h2>
+        <div class="col-6">
+            <h3 class="row">Statistiques :</h3>
 
+            {% if roles == 'student' %}
 
+            <p class="row"> Number of offer in wishlist : {{nbr_wishlist | default('0')}}</p>
 
-    </div>
-        
+            {% elseif roles == 'pilot' or 'deleguate' %}
 
+            <p class="row"> Number of Student in charge of : {{nbr_student_in_charge | default('0')}}</p>
+            <p class="row"> Number of Student who got an internship : {{nbr_student_got_internship | default('0')}}</p>
 
+            {% endif %}
 
-        <div class="row">
-            <div class="col-6">
-                <a href="controler_creation_modification_company.php?id={{id}}"><button>Modifier</button></a>
-            </div>
-            <div class="col-6">
-                <a href=""><button>Supprimer</button></a>
-            </div>
         </div>
+         
+                                                                   
+    </div>
+
+ 
+    <div class="row">
+        <div class="col-6">
+            <a href="controler_creation_modification_company.php?id={{id}}"><button>Modifier</button></a>
+        </div>
+        <div class="col-6">
+            <a href=""><button>Supprimer</button></a>
+        </div>
+    </div>
         
 
 

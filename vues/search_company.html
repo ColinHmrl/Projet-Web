@@ -1,25 +1,18 @@
+
 {% extends "index.html" %}
+
 {% block links %}
+
 {% endblock %}
+
+
+
+
+
 {% block body %}
-
-
 
 <div class="contianer-fluid">
     <form class="container " action="../controlers/controler_search_company.php" method="get">
-        <!--
-
-        critères de recherches :
-            nom text
-            secteur domaine : liste déroulante entre ceux présent dans la bdd
-            compétences recherchés liste déroulante avec case a coché ceux présent dans la bdd
-            localités text avec autocomplétion ceux présent dans la bdd
-            nombre de stagiaire au minimum input  nombre
-            éval stagiaire note minimum
-            eval pilote note minimum
-
-
-            -->
         <input type="text" placeholder="Company name" name="companyName" />
 
         <select name="activityArea" id="activityArea" placeholder="activity area">
