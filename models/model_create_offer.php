@@ -1,6 +1,6 @@
 <?php
 
-function post_form($offertitle,$location,$offer_date,$training_period,$rémunération,$entreprise,$placeavaible,$promoselect,$description,){
+function post_form($offertitle,$location,$offer_date,$training_period,$rémunération,$entreprise,$placeavaible,$promoselect,$description) {
     $date_post = date('y-m-d h:i:s');
     include('loginBDD.php');
     
