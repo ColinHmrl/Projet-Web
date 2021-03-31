@@ -12,7 +12,7 @@ $twig = new \Twig\Environment($loader, [
 if(isset($_COOKIE['user'])){
 
     if(isset($_GET['id']) AND isset($_GET['del']))  {
-        if(Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Supprimer une entreprise')){
+        if(Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Supprimer une entreprise')){
             include('../models/loginBDD.php');
             try {
 

@@ -36,18 +36,18 @@ $twig->addFunction($functionTruncate);
 
 if(isset($_COOKIE['user'])) {
 
-    $tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
-        "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
-        "cstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
-        "ccompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
-        "coffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une offre')),
-        "soffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
-        "spilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
-        "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
-        "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
-        "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
-        "doffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Supprimer une offre')),
-        "moffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Modifier une offre')),
+    $tab = ["cpilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
+        "cdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
+        "cstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
+        "ccompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
+        "coffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une offre')),
+        "soffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
+        "spilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
+        "sdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
+        "sstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
+        "scompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+        "doffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Supprimer une offre')),
+        "moffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Modifier une offre')),
         "cookie" => unserialize($_COOKIE['user'])->id
     ];
 
@@ -55,7 +55,7 @@ if(isset($_COOKIE['user'])) {
 
 
 
-    if((Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre'))){
+    if((Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une offre'))){
 
     if(!empty($_GET['remove'])) {
         ModelWishlist::remove(unserialize($_COOKIE['user'])->id,$_GET['remove']);

@@ -1,6 +1,9 @@
 <?php
 
-function get_activity(){
+
+class ModelSearchCompany {
+
+static function getActivity(){
     include('loginBDD.php');
     $sql = "SELECT DISTINCT activity_area FROM company";
     $prepared = $bdd->prepare($sql);
@@ -8,7 +11,7 @@ function get_activity(){
     $result = $prepared->fetchAll();
     return($result);
 }
-function get_skills(){
+static function getSkills(){
     include('loginBDD.php');
     $sql = "SELECT DISTINCT name FROM skills";
     $prepared = $bdd->prepare($sql);
@@ -16,7 +19,7 @@ function get_skills(){
     $result = $prepared->fetchAll();
     return($result);
 }
-function get_locality(){
+static function getLocality(){
     include('loginBDD.php');
     $sql = "SELECT DISTINCT locality FROM company";
     $prepared = $bdd->prepare($sql);
@@ -28,7 +31,7 @@ function get_locality(){
 
 
 }
-function print_var_name($var) {
+static function printVarName($var) {
     foreach($GLOBALS as $var_name => $value) {
         if ($value === $var) {
             return $var_name;
@@ -38,8 +41,8 @@ function print_var_name($var) {
     return false;
 }
 
-class modele_search_company {
-    static function getSkills($id) {
+
+    static function getSkillsById($id) {
 
         include('loginBDD.php');
         $req = $bdd->prepare('SELECT skills.name FROM offer INNER JOIN need ON need.id_offer = offer.id INNER JOIN skills ON skills.id = need.id_skills WHERE offer.id = ?');
@@ -163,5 +166,5 @@ class modele_search_company {
 
 
 
-?>
+
 

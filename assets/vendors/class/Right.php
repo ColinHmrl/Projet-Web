@@ -56,7 +56,7 @@
             self::$SFx35 = new Right(35,"Informer le système de l'avancement de la candidature step 6");
             }
 
-        public static function get_rights($roles){
+        public static function getRights($roles){
             if (self::$SFx1 == null)
                 self::init();
             switch ($roles){

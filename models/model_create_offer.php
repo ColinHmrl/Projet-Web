@@ -1,6 +1,6 @@
 <?php
 class Offer{
-    static function update_form($id,$locality_offer,$training_period,$remuneration_basis,$offer_date,$title,$nb_places,$description){
+    static function updateForm($id,$locality_offer,$training_period,$remuneration_basis,$offer_date,$title,$nb_places,$description){
         return'update';
         $sum_offer_date = $offer_date ;
         $sum_offer_date .= " " .date('h:i:s');       
@@ -18,7 +18,7 @@ class Offer{
                 ':nb_places' => $nb_places,
                 ':del' => 0,
                 ':description' => $description,
-                ':id_company' => self::get_company_by_name($company_name)->id
+                ':id_company' => self::getCompanyByName($company_name)->id
                 ]);
         }
         catch (PDOException $e) {
@@ -28,7 +28,7 @@ class Offer{
 
     }
 
-    static function post_form($locality_offer,$training_period,$remuneration_basis,$offer_date,$title,$nb_places,$description,$company_name) {
+    static function postForm($locality_offer,$training_period,$remuneration_basis,$offer_date,$title,$nb_places,$description,$company_name) {
         $date_post = date('y-m-d h:i:s');
         $sum_offer_date = $offer_date ;
         $sum_offer_date .= " " .date('h:i:s');
@@ -51,7 +51,7 @@ class Offer{
                     ':nb_places' => $nb_places,
                     ':del' => 0,
                     ':description' => $description,
-                    ':id_company' => self::get_company_by_name($company_name)->id
+                    ':id_company' => self::getCompanyByName($company_name)->id
                 
 
                 ]);
@@ -64,7 +64,7 @@ class Offer{
     }
 
 
-    static function get_offer($id){
+    static function getOffer($id){
         try{
             include('loginBDD.php');
             $sql = "SELECT offer.id,locality_offer,training_period,remuneration_basis,nb_places,date_post,title,offer.description,offer.del,id_company,name,SUBSTRING(offer_date,1,10) as offer_date FROM `offer` INNER JOIN company on offer.id_company = company.id WHERE offer.id = :id";
@@ -90,7 +90,7 @@ class Offer{
         }
     }
 
-    static function get_company(){
+    static function getCompany(){
         include('loginBDD.php');
         $sql = "SELECT DISTINCT name FROM company";
         $prepared = $bdd->prepare($sql);
@@ -98,7 +98,7 @@ class Offer{
         $result = $prepared->fetchAll();
         return($result);
     }
-    static function get_company_by_name($name){
+    static function getCompanyByName($name){
         try{
             include('loginBDD.php');
             $sql = "SELECT id,name FROM `company` WHERE name = :name";

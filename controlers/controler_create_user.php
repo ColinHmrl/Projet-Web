@@ -4,16 +4,16 @@
     require_once '../assets/vendors/autoload.php';
     require '../models/model_user.php';
 
-    $tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
-        "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
-        "cstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
-        "ccompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
-        "coffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une offre')),
-        "soffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
-        "spilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
-        "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
-        "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
-        "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+    $tab = ["cpilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
+        "cdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
+        "cstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
+        "ccompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
+        "coffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une offre')),
+        "soffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
+        "spilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
+        "sdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
+        "sstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
+        "scompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
         "cookie" => unserialize($_COOKIE['user'])->id
     ];
 
@@ -26,14 +26,14 @@
     $promotions = [];
     $rights =[];
     if(!empty($_COOKIE['user'])){
-        if((Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'))||(Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'))||(Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant'))){
+        if((Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'))||(Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'))||(Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant'))){
 
             if(isset($_GET['id'])){
                 
-                $result = Requetes\User::get_user($_GET['id']);
+                $result = Requetes\User::getUser($_GET['id']);
 
-                $promotions = Requetes\Promotion::get_all_promo_name($_GET['id']);
-                $rights = Requetes\Rights::get_all_rights_user($_GET['id']);
+                $promotions = Requetes\Promotion::getAllPromoName($_GET['id']);
+                $rights = Requetes\Rights::getAllRightsUser($_GET['id']);
 
                 echo $twig->render('cUser.html',[
                     'id' => $_GET['id'],
@@ -42,22 +42,22 @@
                     'email' => $result->email,
                     'password_ph' => "leave empty il you don'y want to change",
                     'role' => $result->roles,
-                    'curent_center' => Requetes\Center::get_name_center($result->id_centers),
-                    'centers' => Requetes\Center::get_centers(),
+                    'curent_center' => Requetes\Center::getNameCenter($result->id_centers),
+                    'centers' => Requetes\Center::getCenters(),
                     'current_promotion' => $promotions,
-                    'promotions' => Requetes\Promotion::get_promotions(),
-                    'rights' => \Right::get_rights('delegate'),
+                    'promotions' => Requetes\Promotion::getPromotions(),
+                    'rights' => \Right::getRights('delegate'),
                     'current_rights' => $rights,
-                    'cpilot' => Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'),
-                    'cdelegate'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'),
-                    'cstudent'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')
+                    'cpilot' => Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'),
+                    'cdelegate'=> Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'),
+                    'cstudent'=> Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')
                     ,'arr' => $tab
                     ]);
                     
             }elseif(isset($_POST['last_name'])){
                 if($_POST['id']){
                     if($_POST['role'] != 'student'){
-                        $all_promotions = Requetes\Promotion::get_promotions();
+                        $all_promotions = Requetes\Promotion::getPromotions();
                         for ($i = 0; $i < count($all_promotions) ; $i++){
                             if(isset($_POST[$all_promotions[$i]->name])){
                                 array_push($promotions, $all_promotions[$i]->name);
@@ -68,18 +68,18 @@
                     }
 
                     if ($_POST['role'] == 'delegate'){
-                        $all_rights = \Right::get_rights('delegate');
+                        $all_rights = \Right::getRights('delegate');
                         for ($i = 0; $i < count($all_rights); $i++){
                             if(isset($_POST[str_replace(' ','_',$all_rights[$i]->name)])){
                                 array_push($rights, $all_rights[$i]);
                             }
                         }
                     }else{
-                        $rights = \Right::get_rights($_POST['role']);;
+                        $rights = \Right::getRights($_POST['role']);;
                     }
 
                     if($_POST['password'] == $_POST['sndPassword']){
-                        Requetes\User::update_user($_POST['id'],$_POST['last_name'],$_POST['first_name'],$_POST['email'],hash('sha256',$_POST['password']),$_POST['role'],Requetes\Center::get_id_center($_POST['center']), $promotions, $rights);
+                        Requetes\User::updateUser($_POST['id'],$_POST['last_name'],$_POST['first_name'],$_POST['email'],hash('sha256',$_POST['password']),$_POST['role'],Requetes\Center::getIdCenter($_POST['center']), $promotions, $rights);
                         header('Location: ../controlers/controler_create_user.php?id='. $_POST['id']);
                     }else{
                         echo "mauvais mdp";
@@ -87,7 +87,7 @@
                 }else{
 
                     if($_POST['role'] != 'student'){
-                        $all_promotions = Requetes\Promotion::get_promotions();
+                        $all_promotions = Requetes\Promotion::getPromotions();
                         for ($i = 0; $i < count($all_promotions) ; $i++){
                             if(isset($_POST[$all_promotions[$i]->name])){
                                 array_push($promotions, $all_promotions[$i]->name);
@@ -101,7 +101,7 @@
 
                     if ($_POST['role'] == 'delegate'){
 
-                    $all_rights = \Right::get_rights('delegate');
+                    $all_rights = \Right::getRights('delegate');
 
                     for ($i = 0; $i < count($all_rights); $i++){
                         if(isset($_POST[str_replace(' ','_',$all_rights[$i]->name)])){
@@ -110,11 +110,11 @@
                     }
 
                     }else{
-                        $rights = \Right::get_rights($_POST['role']);;
+                        $rights = \Right::getRights($_POST['role']);;
                     }
 
                     if($_POST['password'] == $_POST['sndPassword']){
-                        Requetes\User::insert_user($_POST['last_name'],$_POST['first_name'],$_POST['email'],hash('sha256',$_POST['password']),$_POST['role'],Requetes\Center::get_id_center($_POST['center']),$promotions, $rights);
+                        Requetes\User::insertUser($_POST['last_name'],$_POST['first_name'],$_POST['email'],hash('sha256',$_POST['password']),$_POST['role'],Requetes\Center::getIdCenter($_POST['center']),$promotions, $rights);
                         header('Location: ../controlers/controler_create_user.php');
                     }else{
                         echo "mauvais mdp";
@@ -127,14 +127,14 @@
                     'email' => "",
                     'role' => "role",
                     'curent_center' => "center",
-                    'centers' => Requetes\Center::get_centers(),
+                    'centers' => Requetes\Center::getCenters(),
                     'current_promotion' => "promotion",
-                    'promotions' => Requetes\Promotion::get_promotions(),
-                    'rights' => \Right::get_rights('delegate'),
+                    'promotions' => Requetes\Promotion::getPromotions(),
+                    'rights' => \Right::getRights('delegate'),
                     'current_rights' => 'none',
-                    'cpilot' => Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'),
-                    'cdelegate'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'),
-                    'cstudent'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')
+                    'cpilot' => Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'),
+                    'cdelegate'=> Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'),
+                    'cstudent'=> Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')
                     ,'arr' => $tab
                     ]);
 

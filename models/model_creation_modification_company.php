@@ -1,6 +1,6 @@
 <?php
 class Company{
-    static function get_company($id){
+    static function getCompany($id){
         try{
             include('loginBDD.php');
             $sql = "SELECT id, name, activity_area, locality, email, invisible, del, description FROM company WHERE id = :id";
@@ -26,7 +26,7 @@ class Company{
         }
     }
 
-    static function update_company($id,$name,$description,$activity_area,$locality,$email){
+    static function updateCompany($id,$name,$description,$activity_area,$locality,$email){
         include('loginBDD.php');
     
         try {
@@ -57,7 +57,7 @@ class Company{
 
 
 
-    static function post_form($name,$description,$activity_area,$locality,$email){
+    static function postForm($name,$description,$activity_area,$locality,$email){
         include('loginBDD.php');
     
         if($_POST){ 
