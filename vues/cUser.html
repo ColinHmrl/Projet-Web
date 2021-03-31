@@ -14,40 +14,40 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col">
+                            <label for="role">Type d'utilisateur :</label>
                             <div class="field">
-                                <label for="role">Type d'utilisateur :</label>
                                 <select class="form-select role" id="role" name="role" >
                                     <option selected value="role" disabled>Role</option>
                                     {% if cpilot == true %}
-                                    <option {%if role == "pilot" %}selected{% endif %} value="pilot">Pilote</option>
+                                    <option {%if role == "pilot" %}selected{% endif %} value="pilot">Pilot</option>
                                     {% endif %}
                                     {% if cdelegate == true %}
-                                    <option {%if role == "delegate" %}selected{% endif %} value="delegate">Délégué</option>
+                                    <option {%if role == "delegate" %}selected{% endif %} value="delegate">Delegate</option>
                                     {% endif %}
                                     {% if cstudent == true %}
-                                    <option {%if role == "student" %}selected{% endif %} value="student">Etudiant</option>
+                                    <option {%if role == "student" %}selected{% endif %} value="student">Student</option>
                                     {% endif %}
                                 </select>
                             </div>
+                            <label for="first_name">First Name : </label>
                             <div class="field">
-                                <label for="first_name">First Name : </label>
                                 <input type="text" id="first_name" name="first_name" value={{first_name}}>
                             </div>
+                            <label for="last_name">Last Name : </label>
                             <div class="field">
-                                <label for="last_name">Last Name : </label>
                                 <input type="text" id="last_name" name="last_name" value={{last_name}}>
                             </div>
+                            <label for="email">Email : </label>
                             <div class="field">
-                                <label for="email">Email : </label>
                                 <input type="email" id="email" name="email" value={{email}}>
                             </div>
+                            <label for="password">Password : </label>
                             <div class="field">
-                                <label for="password">Password : </label>
                                 <input type="text" id="password" name="password">
-                                <label id="ph_under">{{password_ph}}</label>
                             </div>
+                            <label id="ph_under">{{password_ph}}</label>
+                            <label for="sndPassword">Confirm Password : </label>
                             <div class="field sndPassword">
-                                <label for="sndPassword">Confirm Password : </label>
                                 <input type="sndPassword" id="sndPassword" name="sndPassword">
                             </div>
                         </div>
@@ -113,9 +113,14 @@
                 </div>
             </div>
         </div>
-        <input type="submit" class="btn btn-success">
+        <input type="submit" class="btn btn-warning" value="Send">
     </div>
 </form>
+<div style="margin-left: 5%;">
+    {%if modif == true %}
+    <a href="controler_user_del.php?id={{id_cur}}"><button class="btn btn-danger" name="delUser">Delete</button></a>
+    {% endif %}
+</div>
 
 <link href="http://statistics-of-internship-finder.fr/styles/cUser.css" rel="stylesheet">
 <script type="text/javascript" src="../scripts/cUser.js"></script>

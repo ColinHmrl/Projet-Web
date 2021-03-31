@@ -65,11 +65,11 @@ static function getAllUser($role = "null")
     include('../../models/loginBDD.php');
 
     if ($role == "null") {
-        $req = $bdd->prepare('SELECT * FROM users');
+        $req = $bdd->prepare('SELECT * FROM users WHERE users.del = 0');
         if (!$req->execute())
             print_r($bdd->errorInfo());
     } else {
-        $req = $bdd->prepare('SELECT * FROM users WHERE users.roles = ?');
+        $req = $bdd->prepare('SELECT * FROM users WHERE users.roles = ? and users.del = 0');
         if (!$req->execute([$role]))
             print_r($bdd->errorInfo());
     }

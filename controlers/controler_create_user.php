@@ -26,9 +26,11 @@
     $promotions = [];
     $rights =[];
     if(!empty($_COOKIE['user'])){
+
         if((Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'))||(Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'))||(Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant'))){
 
             if(isset($_GET['id'])){
+
                 
                 $result = Requetes\User::get_user($_GET['id']);
 
@@ -51,7 +53,9 @@
                     'cpilot' => Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'),
                     'cdelegate'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'),
                     'cstudent'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')
-                    ,'arr' => $tab
+                    ,'arr' => $tab,
+                    'modif' => true,
+                    'id_cur' => $_GET['id']
                     ]);
                     
             }elseif(isset($_POST['last_name'])){

@@ -18,9 +18,6 @@ $tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->
         "cookie" => unserialize($_COOKIE['user'])->id
     ];
 
-
-
-
 require_once '../assets/vendors/autoload.php';
 require '../models/model_company.php';
 require '../models/model_wishlist.php';
