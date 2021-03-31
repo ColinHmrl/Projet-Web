@@ -110,7 +110,8 @@ if(isset($_COOKIE['user'])) {
         //cr�ation
         echo $twig->render('create_offer.html',[
         'Company'=> $outputCompany,
-        'titre'=> 'Create Offer'
+        'titre'=> 'Create Offer',
+        'arr' => $tab
         ]);
     }   
 }else {
