@@ -13,7 +13,7 @@
 {% block body %}
 <div class="container my-5 p-2 border border-dark" style ="background-color:#ecc59c;">
 
-
+<div class="table table-responsive">
 <table id="table_user" class="display">
     <thead>
         <tr>
@@ -28,7 +28,7 @@
         
     </tbody>
 </table>
-
+</div>
 </div>
 
 <script src="/scripts/get_users.js"></script>
@@ -78,7 +78,7 @@
 
             $.each(users, function(index,element){
                     html+="<tr>";
-                    {% if droitmodif == 1 %}       
+                    {% if droitmodif %}       
                     html+="<td><a href='http://internship-finder.fr/controlers/controler_profil_user.php?id="+element.id+"'>id="+element.id+"</a></td>";
                     {% else %}
                     html+="<td>id="+element.id+"</td>";

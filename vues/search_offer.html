@@ -34,6 +34,15 @@
         </div>
 
         <div class="col-xl-1 col-lg-6 my-2">
+            <select name="skillsName" id="skillsName" style="height:40px;">
+                <option value="" disabled selected>Skill</option>
+                {% for i in skills %}
+                <option value="{{ i.name }}" {% if data.skillsName==i.name %}selected{% endif %}>{{ i.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-xl-1 col-lg-6 my-2">
             <select class="" name="duration" style="height:40px;">
                 <option value="All">All</option>
                 <option value="30" {% if data.training_period==30 %}selected{% endif %}>+1 month</option>
@@ -109,7 +118,7 @@
 </form>
 
 {% for item in result %}
-<div class="container border border-dark my-3" style ="background-color:#ecc59c;">
+<div class="container border border-dark my-3" style="background-color:#ecc59c;">
     <!--Afficher les row-->
 
     <div class="row">
@@ -123,7 +132,7 @@
                 {% for skill in getSkills(item.id) %}
                 <div class="row text-center">
                     <div class="col">
-                        {{skill.name}}
+                        {{skill}}
                     </div>
                 </div>
                 {% endfor %}
@@ -201,8 +210,8 @@
             {% endif %}
         </div>
         <div class="col-xl-6 col-lg-12 text-center">
-            <button type="button" class="btn btn-warning btn-xs my-1">Modifier</button>
-            <button type="button" class="btn btn-warning">Delete</button>
+            {% if arr.moffer %}<button type="button" class="btn btn-warning btn-xs my-1">Modifier</button>{% endif %}
+            {% if arr.doffer %}<button type="button" class="btn btn-warning">Delete</button>{% endif %}
         </div>
         <div class="col-xl-3 col-lg-12 text-right p-2">
             {%if item.day_ago == 0 %}

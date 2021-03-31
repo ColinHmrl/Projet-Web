@@ -13,8 +13,12 @@ $tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->
         "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
         "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
         "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+        "doffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Supprimer une offre')),
+        "moffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Modifier une offre')),
         "cookie" => unserialize($_COOKIE['user'])->id
     ];
+
+
 
 
 require_once '../assets/vendors/autoload.php';
@@ -50,6 +54,7 @@ $twig->addFunction($functionTruncate);
 
 
 if(isset($_COOKIE['user'])) {
+    if((Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre'))){
 
     if(!empty($_GET['remove'])) {
         ModelWishlist::remove(unserialize($_COOKIE['user'])->id,$_GET['remove']);
@@ -57,6 +62,8 @@ if(isset($_COOKIE['user'])) {
     if(!empty($_GET['add'])) {
         ModelWishlist::add(unserialize($_COOKIE['user'])->id,$_GET['add']);
     }
+
+    $outputSkills = ModelSearchOffer::getSkillName();
 
 
     $table = [];
@@ -83,11 +90,25 @@ if(isset($_COOKIE['user'])) {
     
     if(!empty($_GET['offer_date']) && (int) $_GET['offer_date'] != 0)
         $table['offer_date'] = $_GET['offer_date'];
+
+    if(!empty($_GET['skillsName']))
+        $table['skillsName'] = $_GET['skillsName'];
         
 
-    echo $twig->render('search_offer.html',['tab'=>Company::getCompanyName(),'result'=>ModelSearchOffer::getOffer($table),'locations' => ModelSearchOffer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'arr' => $tab]);
+    echo $twig->render('search_offer.html',['tab'=>Company::getCompanyName(),
+                                            'result'=>ModelSearchOffer::getOffer($table),
+                                            'locations' => ModelSearchOffer::getLocation(),
+                                            'data' => $table,
+                                            'id_user' => unserialize($_COOKIE['user'])->id,
+                                            'arr' => $tab,
+                                            'skills' => $outputSkills]);
 
 
+}
+
+else{
+    echo $twig->render('error_page.html',['error' => "Error 403 : vous n'avez pas acces à cette ressource :)"]);
+}
 }
 else {
             echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);

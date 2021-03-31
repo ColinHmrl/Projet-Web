@@ -24,8 +24,8 @@ $tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->
 
 
 if(!empty($_COOKIE['user'])) {
+    if((Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre'))){
 
-//get droit
 $droitmodif = !empty($_COOKIE['user']) ? true : false;
 
 if(!empty($_GET['user_role']))
@@ -34,6 +34,10 @@ else
     echo $twig->render('search_user.html',['droitmodif' => $droitmodif, 'user' => unserialize($_COOKIE['user']),'tab' => $tab]);
 
 
+}
+    else {
+        echo $twig->render('error_page.html',['error' => "Error 403 : vous n'avez pas acces à cette ressource :)"]);
+    }
 }
 else {
 

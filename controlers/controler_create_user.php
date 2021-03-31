@@ -140,7 +140,7 @@
 
             }
         }else{
-            echo $twig->render('error_page.html',['error' => 'Error 403 : vous n avez pas acces à cette ressource :)']);
+            echo $twig->render('error_page.html',['error' => "Error 403 : vous n'avez pas acces à cette ressource :)"]);
         }
     }else{
         echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);

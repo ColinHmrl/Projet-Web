@@ -15,6 +15,8 @@ $count = count($tab);
 
 if(isset($tab['promotion']))
     $count--;
+if(isset($tab['skillsName']))
+    $count--;
 
 if($count>0) {
     $stringSQL .= ' WHERE ';
@@ -36,6 +38,7 @@ if($count>0) {
                 $stringSQL .= ' AND ';
             break;
             case "promotion" :
+            case "skillsName" :
             break;
             case "offer_date" :
                 if($tab['offer_date']==-1)
@@ -52,7 +55,7 @@ if($count>0) {
 
     }
 }
-
+    //var_dump($stringSQL);
     $req = $bdd->prepare($stringSQL);// WHERE email = ? AND password = ?');
 
     if(!$req->execute($tableValue))
@@ -63,11 +66,28 @@ if($count>0) {
         while($donnee = $req->fetch()) {
 
             if(isset($tab['promotion'])) {
-                if(array_search($tab['promotion'],self::getPromo($donnee->id)) !== false)
-                $donnees[] = $donnee;
+                if(array_search($tab['promotion'],self::getPromo($donnee->id)) !== false) {
+                    if(isset($tab['skillsName'])) {
+                        if(array_search($tab['skillsName'],self::getSkills($donnee->id)) !== false) { 
+                            $donnees[] = $donnee;
+                        }
+                    }
+                    else {
+                        $donnees[] = $donnee;
+                    }   
+                }
             }
-            else
-            $donnees[] = $donnee;
+            else {
+                if(isset($tab['skillsName'])) {
+                    if(array_search($tab['skillsName'],self::getSkills($donnee->id)) !== false) { 
+                        $donnees[] = $donnee;
+                    }
+                }
+                else {
+                    $donnees[] = $donnee;
+                }
+            }
+            
         }
         $req->closeCursor();
         return $donnees;
@@ -85,11 +105,14 @@ static function getSkills($id) {
     if(!$req->execute([$id]))
         print_r($bdd->errorInfo());
     else {
+        $donnees = [];
         //var_dump(hash('sha256',$password));
-        if($donnees = $req->fetchAll()) {
-            $req->closeCursor();
-            return $donnees;
+        while($donnee = $req->fetch()) {
+            
+            $donnees[] = $donnee->name;
         }
+        $req->closeCursor();
+        return $donnees;
         echo 'No Result';
         
     }
@@ -143,6 +166,15 @@ static function getLocation() {
 
 
 
+}
+
+static function getSkillName(){
+    include('loginBDD.php');
+    $sql = "SELECT DISTINCT name FROM skills";
+    $prepared = $bdd->prepare($sql);
+    $prepared->execute();
+    $result = $prepared->fetchAll();
+    return($result);
 }
 
 

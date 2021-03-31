@@ -1,5 +1,4 @@
-#AuthUserFile /users/.htpasswd
-#AuthName "Accès protégé" 
+#AuthUserFile "/users/.htpasswd"
 #AuthType Basic
-
-#Require valid-user
+#AuthName "My restricted Area"
+#Require user Adrien
