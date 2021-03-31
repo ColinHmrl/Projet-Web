@@ -4,37 +4,30 @@ session_start();
 require_once '../assets/vendors/autoload.php';
 require '../models/model_user.php';
 
-
-
-
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../vues');
-$twig = new \Twig\Environment($loader, [
-    'cache' => false, //__DIR__.'/cache'
-]);
-    
-$promotions = [];
-$rights =[];
-if(!empty($_COOKIE['user'])){
-
-
-    $tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
-        "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
-        "cstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
-        "ccompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
-        "coffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une offre')),
-        "soffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
-        "spilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
-        "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
-        "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
-        "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+    $tab = ["cpilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
+        "cdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
+        "cstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
+        "ccompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
+        "coffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une offre')),
+        "soffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
+        "spilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
+        "sdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
+        "sstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
+        "scompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
         "cookie" => unserialize($_COOKIE['user'])->id
     ];
     
+
+    $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../vues');
+    $twig = new \Twig\Environment($loader, [
+        'cache' => false, //__DIR__.'/cache'
+    ]);
+
     $promotions = [];
     $rights =[];
     if(!empty($_COOKIE['user'])){
 
-        if((Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'))||(Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'))||(Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant'))){
+        if((Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'))||(Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'))||(Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant'))){
 
             if(isset($_GET['id'])){
 
@@ -57,9 +50,9 @@ if(!empty($_COOKIE['user'])){
                     'promotions' => Requetes\Promotion::getPromotions(),
                     'rights' => \Right::getRights('delegate'),
                     'current_rights' => $rights,
-                    'cpilot' => Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'),
-                    'cdelegate'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'),
-                    'cstudent'=> Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')
+                    'cpilot' => Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote'),
+                    'cdelegate'=> Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué'),
+                    'cstudent'=> Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')
                     ,'arr' => $tab,
                     'modif' => true,
                     'id_cur' => $_GET['id']
@@ -156,5 +149,4 @@ if(!empty($_COOKIE['user'])){
     }else{
         echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
     }
-}
 ?>
