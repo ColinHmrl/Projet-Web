@@ -19,26 +19,31 @@
             {{locality | raw}}
         </select>
 
-        <select name="skills" id="skills">
+        <select name="skillsName" id="skillsName">
             <option value="" disabled selected>Skill</option>
             {{skills | raw}}
         </select>
+
         <input type="number" placeholder="Number of Trainee" name="numberOfTrainee" min="0" max="100">
 
 
-        <select name="traineeScore" id="traineeScore">
+        <select name="rateStudent" id="rateStudent">
             <option value="" disabled selected>Minimum Trainee score</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+
         </select>
-        <select name="pilotScore" id="pilotScore">
+        <select name="ratePilot" id="ratePilot">
             <option value="" disabled selected>Minimum Pilot score</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+
         </select>
 
         <input type="submit" />
@@ -50,6 +55,9 @@
 
 
 <div class="container">
+    {% if result is empty %}
+    <p class="row">Any Offer available</p>
+    {% else %}
     {% for item in result %}
 
     <div class="row">
@@ -62,36 +70,55 @@
 
             <p class="row">Locality : {{item.locality}}</p>
             <p class="row">Activity Area : {{item.activity_area}}</p>
-            <!--
-            <div>
-                <h4 class="row">Skills :</h4>
-                {% for skill in getSkills(item.id) %}
-                <p class="row">{{skill.name}}</p>
+
+
+            <div class="row">
+                <h4 class="col-12">Skills :</h4>
+                {% for skill in getSkillsOfIdCompany(item.ID) %}
+                <p class="col-4">{{skill.name}}</p>
                 {% endfor %}
 
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h4 class="row">Stats :</h4>
+                    <p class="row">Trainee Hired : {{item.number_of_trainee | default('0')}}</p>
+                    <p class="row">Trainee Score : {{item.rateStudent | default('Not Rated')}}</p>
+                    <p class="row">Pilot Score : {{item.ratePilot | default('Not Rated')}}</p>
+                </div>
 
             </div>
-            <div>
-                <h4 class="row ">Stats :</h4>
-                <p class="row">Trainee Hired : {{item.number_of_trainee | default('0')}}</p>
-                <p class="row">Trainee Score : {{4 - item.rateStudent}}</p>
-                <p class="row">Pilot Score : {{4 - item.ratePilot}}</p>
-            </div>
-            -->
+
 
 
 
         </div>
         <div class="col-6">
-            <h4 class="row">laDescription :</h4>
+            <h4 class="row">Description :</h4>
             <p class="row">{{ item.description}}</p>
         </div>
-        <div class="row">
-            <a class="col" href="controler_creation_modification_company.php?id={{item.ID}}"><button>Modifier</button></a>
+        <div class="col-4">
+            <a  href="controler_creation_modification_company.php?id={{item.ID}}"><button>Modifier</button></a>
         </div>
+        <div class="col-4">
+            <a href="controler_del.php?id={{item.ID}}&del=1"><button>Supprimer</button></a>
+        </div>
+        <select class="col-4">
+            name="rateGived" id="rateGived">
+            <option value="" disabled selected>Rate !</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+
+        </select>
 
     </div>
 
     {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
