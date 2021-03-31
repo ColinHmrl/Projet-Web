@@ -17,7 +17,6 @@
     ];
 
     require_once '../assets/vendors/autoload.php';
-    require '../models/model_user.php';
 
     $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../vues');
     $twig = new \Twig\Environment($loader, [
