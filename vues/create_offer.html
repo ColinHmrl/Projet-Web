@@ -8,6 +8,7 @@
 <div class="container">
         
     <form id="formulaire_offre" action="controler_create_offer.php" method="POST">
+        <input class="col-12" type="hidden" id="id" name="id" value="{{id}}" requiered>
         <div class="row">
             <div class="col text-center">
                 <h1 class="h1">{{titre}}</h1>
@@ -26,38 +27,38 @@
                             </div>
                             <div class="row crit">
                                 <label class="col-6" for="locality_offer">Locality :</label>
-                                <input class="col-6" type="text" id="locality_offer" name="locality_offer" value="{{locality_offer}}"requiered>
+                                <input class="col-6" type="text" id="locality_offer" name="locality_offer" value="{{locality_offer}}" requiered>
                             </div>
                             <div class="row crit">
                                 <label class="col-6" for="offer_date">Offer date :</label>
-                                <input class="col-6" type="date" id="offer_date" name="offer_date" value="{{offer_date}}"requiered>
+                                <input class="col-6" type="date" id="offer_date" name="offer_date" value="{{offer_date}}" requiered>
                             </div>
                             <div class="row crit">
                                 <label class="col-6" for="training_period">Training period (in days) :</label>
-                                <input class="col-6" type="text" id="training_period" name="training_period" value="{{training_period}}"requiered>
+                                <input class="col-6" type="text" id="training_period" name="training_period" value="{{training_period}}" requiered>
                             </div>
                             <div class="row crit">
                                 <label class="col-6" for="remuneration_basis">Remuneration Basis (in x.xx$/hour) :</label>
-                                <input class="col-6" type="text" id="remuneration_basis" name="remuneration_basis" value="{{remuneration_basis}}"requiered>
+                                <input class="col-6" type="text" id="remuneration_basis" name="remuneration_basis" value="{{remuneration_basis}}" requiered>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="row crit">
                                 <label class="col-6" for="title">Offer title :</label>
-                                <input class="col-6" type="text" id="title" name="title" value="{{title}}"requiered>
+                                <input class="col-6" type="text" id="title" name="title" value="{{title}}" requiered>
                             </div>
                             <div class="row crit">
-                                <label class="col-6" for="nb_places">Places avaible :</label>
-                                <input class="col-6" type="number" id="nb_places" name="nb_places" value="{{nb_places}}"requiered>
+                                <label class="col-6" for="nb_places">Places available :</label>
+                                <input class="col-6" type="number" id="nb_places" name="nb_places" value="{{nb_places}}" requiered>
                             </div>
                             <div class="row crit">
                                 <label class="col-6">Promotions :</label>
                                 <div class="col-6">
-                                    <label class="row" for="A1">A1<input type="checkbox" id="A1" name="A1" value="1" /></label>
-                                    <label class="row" for="A2">A2<input type="checkbox" id="A2" name="A2" value="2" /></label>
-                                    <label class="row" for="A3">A3<input type="checkbox" id="A3" name="A3" value="3" /></label>
-                                    <label class="row" for="A4">A4<input type="checkbox" id="A4" name="A4" value="4" /></label>
-                                    <label class="row" for="A5">A5<input type="checkbox" id="A5" name="A5" value="5" /></label>
+                                    <label class="row" for="A1">A1<input type="checkbox" id="A1" name="A1" value="1" {{checked1 | default('')}}/></label>
+                                    <label class="row" for="A2">A2<input type="checkbox" id="A2" name="A2" value="2" {{checked2 }}/></label>
+                                    <label class="row" for="A3">A3<input type="checkbox" id="A3" name="A3" value="3" {{checked3 }}/></label>
+                                    <label class="row" for="A4">A4<input type="checkbox" id="A4" name="A4" value="4" {{checked4 }}/></label>
+                                    <label class="row" for="A5">A5<input type="checkbox" id="A5" name="A5" value="5" {{checked5 }}/></label>
                                 </div>
 
                             </div>

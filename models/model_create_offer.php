@@ -111,7 +111,6 @@ class Offer{
             }
 
             $result = $prepared->fetch();
-            var_dump($result);
             return $result;
 
         }
@@ -124,6 +123,107 @@ class Offer{
                 die('Erreur : '.$e->getMessage());
         }
     }
+    static function GetLastOfferID(){
+            try{
+            include('loginBDD.php');
+            $sql = "SELECT MAX(id) as max FROM offer";
+            $prepared = $bdd->prepare($sql);
+
+            if(!$prepared->execute()){
+                print_r($bdd->errorInfo());
+            }
+
+            $result = $prepared->fetch();
+            return $result->max;
+
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+
+    }
+    static function PostOfferPromotion($id_promo,$id_offer){
+
+        if($_POST){ 
+        
+            try {
+                include('loginBDD.php');
+                $sql = "INSERT INTO offer_promotions (id_offer, id_promotions) VALUES (:id_offer,:id_promotions)"; 
+                $prepared = $bdd->prepare($sql);
+                $prepared->execute([
+                    ':id_offer' => $id_offer,
+                    ':id_promotions' => $id_promo
+                ]);
+                
+            }
+            catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
+        }
+    }
+    static function DeleteOfferPromotion($id_offer){
+        if($_POST){ 
+        
+            try {
+                include('loginBDD.php');
+                $sql = "DELETE FROM offer_promotions WHERE id_offer = :id_offer "; 
+                $prepared = $bdd->prepare($sql);
+                
+                $prepared->execute([
+                    ':id_offer' => $id_offer
+                ]);
+            }
+            catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
+        }
+
+
+
+
+    }
+    static function CheckOfferPromotionRelation($id_promo,$id_offer){
+
+         
+
+             try{
+                include('loginBDD.php');
+                $sql = "SELECT COUNT(id_offer) as exist FROM offer_promotions WHERE id_offer = :id_offer AND id_promotions = :id_promotions";
+                $prepared = $bdd->prepare($sql);
+
+                if(!$prepared->execute([
+                    ':id_offer' => $id_offer,
+                    ':id_promotions' => $id_promo
+                ])){
+                    print_r($bdd->errorInfo());
+                }
+
+                $result = $prepared->fetch();
+
+                
+                if($result->exist){
+                    return 'checked';
+                }else{
+                    return 'do not exist';
+                }
+                    
+                
+                
+
+             }catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
+        
+    }
+
 }
 
 ?>

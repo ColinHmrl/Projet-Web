@@ -35,38 +35,68 @@ foreach ($result as $e){
 
 
 
+
 // arriv� sur la page mofification
 if(isset($_COOKIE['user'])) {
     if(isset($_GET['id'])){
-            //modif
+        //modif
     
-            $result = Offer::get_offer($_GET['id']);
-            var_dump($result);
+        $result = Offer::get_offer($_GET['id']);
+        
 
-            echo "<option value=' ".$result->name." ' name=' ".$result->name." ' selected>".$result->name."</option>";
+        
 
-            echo $twig->render('create_offer.html',[
-                    'locality_offer'=> $result->locality_offer,
-                    'training_period'=> $result->training_period,
-                    'remuneration_basis'=> $result->remuneration_basis,
-                    'offer_date'=> $result->offer_date,
-                    'date_post'=> $result->date_post,  //2021-03-29 11:33:17
-                    'title'=> $result->title,
-                    'nb_places' => $result->nb_places,
-                    'description' => $result->description,
-                    'Company' => "<option value=".$result->name." name=".$result->name." selected>".$result->name."</option>",
+        echo $twig->render('create_offer.html',[
+                'locality_offer'=> $result->locality_offer,
+                'training_period'=> $result->training_period,
+                'remuneration_basis'=> $result->remuneration_basis,
+                'offer_date'=> $result->offer_date,
+                'date_post'=> $result->date_post,  //2021-03-29 11:33:17
+                'title'=> $result->title,
+                'nb_places' => $result->nb_places,
+                'description' => $result->description,
+                'Company' => "<option value=".$result->name." name=".$result->name." selected>".$result->name."</option>",
+                'id'=>$result->id,
+                'checked1'=> Offer::CheckOfferPromotionRelation(1,$result->id),
+                'checked2'=> Offer::CheckOfferPromotionRelation(2,$result->id),
+                'checked3'=> Offer::CheckOfferPromotionRelation(3,$result->id),
+                'checked4'=> Offer::CheckOfferPromotionRelation(4,$result->id),
+                'checked5'=> Offer::CheckOfferPromotionRelation(5,$result->id),
 
-                'titre'=> 'Modification Offer'
-                ]);
+                'titre'=> 'Modification Offer']);
+
     }elseif(isset($_POST['locality_offer'])){
-        if(isset($_GET['id'])){
+        if(isset($_POST['id'])){
             //destination post modification
             echo 'updated';
-            Offer::update_form($_GET['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description']);        //destination post cr�ation
-
+            Offer::update_form($_POST['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description']);        //destination post cr�ation
+            
+            Offer::DeleteOfferPromotion($_POST['id']);
+            $i = 1;
+            for ($i = 1; $i <= 5; $i++){
+                if(!empty($_POST['A'.$i])){
+                    echo $_POST['id'];
+                    Offer::PostOfferPromotion($i,$_POST['id']);
+                }
+            }
+            //redirection
+            header('Location: ../controlers/controler_create_offer.php');
         }else{
             echo 'created';
             Offer::post_form($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],'HamerelCorp');
+
+            $i = 1;
+            for ($i = 1; $i <= 5; $i++){
+                if(!empty($_POST['A'.$i])){
+                    Offer::PostOfferPromotion($i,Offer::GetLastOfferID());
+                }
+            }
+            //redirection
+            header('Location: ../controlers/controler_create_offer.php');
+            
+
+
+
 
             
         }

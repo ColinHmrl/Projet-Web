@@ -45,7 +45,7 @@ if(isset($_COOKIE['user'])) {
         //destination post modification
         echo 'updated';
         //echo twig
-        update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
+        Company::update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
         header('Location: ../controlers/controler_creation_modification_company.php?id='. $_POST['id']);
         
         
@@ -54,7 +54,7 @@ if(isset($_COOKIE['user'])) {
 
 
     }else{
-        post_form($_POST['name'],$_POST['description'],$_POST['activity_area'],$_POST['locality'],$_POST['email']);
+        Company::post_form($_POST['name'],$_POST['description'],$_POST['activity_area'],$_POST['locality'],$_POST['email']);
         header('Location: ../controlers/controler_creation_modification_company.php');
     }
 }else{
