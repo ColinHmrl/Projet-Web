@@ -6,7 +6,7 @@ require_once "../assets/vendors/class/Right.php";
 
 class User{
 
-    static function insert_user($last_name, $first_name, $email, $password, $roles, $id_centers,$promotions,$rights){
+    static function insertUser($last_name, $first_name, $email, $password, $roles, $id_centers,$promotions,$rights){
         try{
             include('loginBDD.php');
     
@@ -26,7 +26,7 @@ class User{
             foreach($promotions as $promo){
     
                 $req = $bdd->prepare('INSERT INTO users_promotions (id_promotions, id_users) VALUES (?, ?);');
-                $promo_id = Promotion::get_id_promotion($promo);
+                $promo_id = Promotion::getIdPromotion($promo);
                 if(!$req->execute([$promo_id, $id_user]))
                     print_r($bdd->errorInfo());
             }
@@ -49,7 +49,7 @@ class User{
         }
     }
 
-    static function get_user($id){
+    static function getUser($id){
 
         try{
             include('loginBDD.php');
@@ -72,7 +72,7 @@ class User{
         }
     }
 
-    static function update_user($id, $last_name, $first_name, $email, $password, $roles, $id_centers, $promotions, $rights){
+    static function updateUser($id, $last_name, $first_name, $email, $password, $roles, $id_centers, $promotions, $rights){
         
         try{
             include('loginBDD.php');
@@ -102,7 +102,7 @@ class User{
                 
                 $req = $bdd->prepare('INSERT INTO users_promotions (id_promotions, id_users) VALUES (?, ?);');
                 
-                $promo_id = Promotion::get_id_promotion($promo);
+                $promo_id = Promotion::getIdPromotion($promo);
 
                 if(!$req->execute([$promo_id, $id]))
                     print_r($bdd->errorInfo());
@@ -138,7 +138,7 @@ class User{
 
 class Center{
 
-    static function get_centers(){
+    static function getCenters(){
 
         try{
             include('loginBDD.php');
@@ -159,8 +159,8 @@ class Center{
         }
     }
 
-    static function get_id_center($center){
-        $centers = Center::get_centers();
+    static function getIdCenter($center){
+        $centers = Center::getCenters();
         foreach($centers as &$cent){
             if ($cent->name == $center){
                 return $cent->id;
@@ -168,15 +168,15 @@ class Center{
         }
     }
 
-    static function get_name_center($id){
-        $centers = Center::get_centers();
+    static function getNameCenter($id){
+        $centers = Center::getCenters();
         foreach($centers as &$cent){
             if ($cent->id == $id){
                 return $cent->name;
             }
         }
     }
-    static function get_center($id){
+    static function getCenter($id){
         try{
             include('loginBDD.php');
             $sql = "SELECT centers.name FROM users INNER JOIN centers on users.id_centers = centers.id WHERE users.id = :id";
@@ -205,7 +205,7 @@ class Center{
 
 class Promotion{
 
-    static function get_promotions(){
+    static function getPromotions(){
 
         try{
             include('loginBDD.php');
@@ -226,7 +226,7 @@ class Promotion{
         }
     }
 
-    static function get_all_promo_name($id_user){
+    static function getAllPromoName($id_user){
 
         try{
             include('loginBDD.php');
@@ -238,7 +238,7 @@ class Promotion{
             
             $result = $req->fetchAll();
             
-            return Promotion::get_name_promo($result);
+            return Promotion::getNamePromo($result);
         }
         catch(\Exception $e)
         {
@@ -250,8 +250,8 @@ class Promotion{
         }
     }
 
-    static function get_name_promo($id){
-        $promotions = Promotion::get_promotions();
+    static function getNamePromo($id){
+        $promotions = Promotion::getPromotions();
         $promo_name = [];
         foreach($id as &$idprom){
             foreach($promotions as &$prom){
@@ -263,8 +263,8 @@ class Promotion{
         return $promo_name;
     }
 
-    static function get_id_promotion($promo){
-        $promotions = Promotion::get_promotions();
+    static function getIdPromotion($promo){
+        $promotions = Promotion::getPromotions();
         foreach($promotions as &$prom){
             if ($prom->name == $promo){
                 return $prom->id;
@@ -272,7 +272,7 @@ class Promotion{
         }
     }
 
-    static function get_promo($id){
+    static function getPromo($id){
         try{
             include('loginBDD.php');
             $sql = "SELECT promotions.name FROM promotions INNER JOIN users_promotions on promotions.id = users_promotions.id_promotions INNER JOIN users on users.id = users_promotions.id_users WHERE users.id = :id";
@@ -301,8 +301,8 @@ class Promotion{
 }
 class Rights{
 
-    static function get_all_rights_name($ids){
-        $all_rights = \Right::get_rights('delegate');
+    static function getAllRightsName($ids){
+        $all_rights = \Right::getRights('delegate');
         $rights_name =[];
         foreach($ids as &$id){
             foreach($all_rights as &$right){
@@ -314,7 +314,7 @@ class Rights{
         return $rights_name;
     }
 
-    static function get_all_rights_user($id_user){
+    static function getAllRightsUser($id_user){
 
         try{
             include('loginBDD.php');
@@ -326,7 +326,7 @@ class Rights{
             
             $result = $req->fetchAll();
             
-            return Rights::get_all_rights_name($result);
+            return Rights::getAllRightsName($result);
         }
         catch(\Exception $e)
         {
@@ -338,10 +338,10 @@ class Rights{
         }
     }
 
-    static function have_right($id_users, $right_name){
+    static function haveRight($id_users, $right_name){
 
         $id_right = "";
-        foreach (\Right::get_rights("admin") as &$right) {
+        foreach (\Right::getRights("admin") as &$right) {
             if($right->name == $right_name){
                 $id_right = $right->id;
             }
@@ -370,7 +370,7 @@ class Rights{
 
 
 class Stats{
-    static function get_nbr_in_wishlist($id){
+    static function getNbrInWishlist($id){
         try{
             include('loginBDD.php');
             $sql = "SELECT COUNT(id_users) as count FROM users INNER JOIN wishlist on wishlist.id_users = users.id WHERE users.id = :id";
@@ -395,7 +395,7 @@ class Stats{
                 die('Erreur : '.$e->getMessage());
         }
     }
-    static function get_nbr_student_in_charge($id){
+    static function getNbrStudentInCharge($id){
         try{
             include('loginBDD.php');
             $sql = "SELECT COUNT('users.id') as count FROM 
@@ -425,7 +425,7 @@ class Stats{
                 die('Erreur : '.$e->getMessage());
         }
     }
-    static function get_nbr_student_got_internship($id){
+    static function getNbrStudentGotInternship($id){
         try{
             include('loginBDD.php');
             $sql = "SELECT count(id) as count FROM 

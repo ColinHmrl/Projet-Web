@@ -2,7 +2,7 @@
 
 class Company {
 
-    static function get_company_by_id($id){ // get one company by id 
+    static function getCompanyById($id){ // get one company by id 
         try{
             include('loginBDD.php');
             $sql = "SELECT * FROM company WHERE id = :id";
@@ -86,6 +86,7 @@ class Company {
         if(!$req->execute([$promo_id, $id]))
             print_r($bdd->errorInfo());
     }
+
 }
 
 class Stats{

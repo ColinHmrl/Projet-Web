@@ -2,20 +2,6 @@
 session_start();
 
 require '../models/model_user.php';
-
-$tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
-        "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
-        "cstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
-        "ccompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
-        "coffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une offre')),
-        "soffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
-        "spilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
-        "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
-        "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
-        "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
-        "cookie" => unserialize($_COOKIE['user'])->id
-    ];
-
 require_once '../assets/vendors/autoload.php';
 require '../models/model_create_offer.php';
 
@@ -25,11 +11,11 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 //affichage select company
-$result = Offer::get_company();
+$result = Offer::getCompany();
 $outputCompany = '';
 foreach ($result as $e){
     foreach ( $e as $p){
-        $outputCompany .= "<option name=".$p.">".$p."</option>";
+        $outputCompany .= "<option name=".$p.">".Offer::get_company_by_id($p)->name."</option>";
     }
 }
 
@@ -38,10 +24,27 @@ foreach ($result as $e){
 
 // arriv� sur la page mofification
 if(isset($_COOKIE['user'])) {
+
+
+    $tab = ["cpilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
+        "cdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
+        "cstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
+        "ccompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
+        "coffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une offre')),
+        "soffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
+        "spilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
+        "sdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
+        "sstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
+        "scompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+        "cookie" => unserialize($_COOKIE['user'])->id
+    ];
+
+
+
     if(isset($_GET['id'])){
         //modif
     
-        $result = Offer::get_offer($_GET['id']);
+        $result = Offer::getOffer($_GET['id']);
         
 
         
@@ -55,7 +58,7 @@ if(isset($_COOKIE['user'])) {
                 'title'=> $result->title,
                 'nb_places' => $result->nb_places,
                 'description' => $result->description,
-                'Company' => "<option value=".$result->name." name=".$result->name." selected>".$result->name."</option>",
+                'Company' => "<option value=".$result->id." name=".$result->id." selected>".$result->name."</option>",
                 'id'=>$result->id,
                 'checked1'=> Offer::CheckOfferPromotionRelation(1,$result->id),
                 'checked2'=> Offer::CheckOfferPromotionRelation(2,$result->id),
@@ -69,7 +72,7 @@ if(isset($_COOKIE['user'])) {
         if(isset($_POST['id'])){
             //destination post modification
             echo 'updated';
-            Offer::update_form($_POST['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description']);        //destination post cr�ation
+            Offer::updateForm($_POST['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description']);        //destination post cr�ation
             
             Offer::DeleteOfferPromotion($_POST['id']);
             $i = 1;
@@ -80,10 +83,10 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            header('Location: ../controlers/controler_create_offer.php');
+            header('Location: ../controlers/controler_search_offer.php');
         }else{
             echo 'created';
-            Offer::post_form($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],'HamerelCorp');
+            Offer::postForm($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],'HamerelCorp');
 
             $i = 1;
             for ($i = 1; $i <= 5; $i++){
@@ -92,7 +95,7 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            header('Location: ../controlers/controler_create_offer.php');
+            header('Location: ../controlers/controler_search_offer.php');
             
 
 
@@ -107,7 +110,8 @@ if(isset($_COOKIE['user'])) {
         //cr�ation
         echo $twig->render('create_offer.html',[
         'Company'=> $outputCompany,
-        'titre'=> 'Create Offer'
+        'titre'=> 'Create Offer',
+        'arr' => $tab
         ]);
     }   
 }else {
