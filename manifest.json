@@ -1,53 +1,21 @@
 
 {
-   "short_name": "Internship-finder",
-   "name": "Weather: Do I need an umbrella?",
+   "short_name": "IS Finder",
+   "name": "InternShip Finder",
    "icons": [
      {
-       "src": "/images/icons-192.png",
+       "src": "http://statistics-of-internship-finder.fr/Images/logo.png",
        "type": "image/png",
-       "sizes": "192x192"
-     },
-     {
-       "src": "/images/icons-512.png",
-       "type": "image/png",
-       "sizes": "512x512"
+       "sizes": "667x667"
      }
    ],
-   "start_url": "/?source=pwa",
-   "background_color": "#3367D6",
+   "start_url": "index.php",
+   "background_color": "#EBDCCB",
    "display": "standalone",
    "scope": "/",
-   "theme_color": "#3367D6",
-   "shortcuts": [
-     {
-       "name": "How's weather today?",
-       "short_name": "Today",
-       "description": "View weather information for today",
-       "url": "/today?source=pwa",
-       "icons": [{ "src": "/images/today.png", "sizes": "192x192" }]
-     },
-     {
-       "name": "How's weather tomorrow?",
-       "short_name": "Tomorrow",
-       "description": "View weather information for tomorrow",
-       "url": "/tomorrow?source=pwa",
-       "icons": [{ "src": "/images/tomorrow.png", "sizes": "192x192" }]
-     }
-   ],
-   "description": "Weather forecast information",
-   "screenshots": [
-     {
-       "src": "/images/screenshot1.png",
-       "type": "image/png",
-       "sizes": "540x720"
-     },
-     {
-       "src": "/images/screenshot2.jpg",
-       "type": "image/jpg",
-       "sizes": "540x720"
-     }
-   ]
+   "theme_color": "#d85f5f",
+   "orientation": "portrait-primary",
+   "description": "Search and found your internship !"
  }
 
 

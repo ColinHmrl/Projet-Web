@@ -28,13 +28,13 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 $functionSkills = new \Twig\TwigFunction('getSkills', function ($id) {
-    return model_search_offer::getSkills($id);
+    return ModelSearchOffer::getSkills($id);
 });
 $twig->addFunction($functionSkills);
 
 
 $twig->addFunction(new \Twig\TwigFunction('getPromo', function ($id) {
-    return model_search_offer::getPromo($id);
+    return ModelSearchOffer::getPromo($id);
 }));
 
 $twig->addFunction(new \Twig\TwigFunction('truncate', function ($text,$length,$r,$ifspace) {
@@ -42,17 +42,17 @@ $twig->addFunction(new \Twig\TwigFunction('truncate', function ($text,$length,$r
 }));
 
 $twig->addFunction(new \Twig\TwigFunction('isWishlist', function ($id1,$id2) {
-    return model_wishlist::isWishlist($id1,$id2);
+    return ModelWishlist::isWishlist($id1,$id2);
 }));
 
 $twig->addFunction(new \Twig\TwigFunction('getStep', function ($id1,$id2) {
-    return model_wishlist::getStep($id1,$id2);
+    return ModelWishlist::getStep($id1,$id2);
 }));
 
 if(isset($_COOKIE['user'])) {
 
     if(!empty($_GET['remove'])) {
-        model_wishlist::remove(unserialize($_COOKIE['user'])->id,$_GET['remove']);
+        ModelWishlist::remove(unserialize($_COOKIE['user'])->id,$_GET['remove']);
     }
 
     $table['id_users'] = unserialize($_COOKIE['user'])->id;
@@ -80,7 +80,7 @@ if(isset($_COOKIE['user'])) {
         $table['offer_date'] = $_GET['offer_date'];
         
     //var_dump(model_wishlist::getOffer($table));
-    echo $twig->render('wishlist.html',['tab'=>company::getCompanyName(),'result'=>model_wishlist::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'titre' => 'Wishlist','arr' => $tab]);
+    echo $twig->render('wishlist.html',['tab'=>Company::getCompanyName(),'result'=>ModelWishlist::getOffer($table),'locations' => ModelSearchOffer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'titre' => 'Wishlist','arr' => $tab]);
 
 
 }
