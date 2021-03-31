@@ -86,6 +86,7 @@ class Company {
         if(!$req->execute([$promo_id, $id]))
             print_r($bdd->errorInfo());
     }
+
 }
 
 class Stats{
