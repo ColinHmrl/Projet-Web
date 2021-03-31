@@ -2,8 +2,6 @@
 
 class Company {
 
-
-
     static function get_company_by_id($id){ // get one company by id 
         try{
             include('loginBDD.php');
@@ -52,7 +50,6 @@ class Company {
 
     static function getCompanyName(){
 
-
         include('loginBDD.php');
     
             $req = $bdd->prepare('SELECT * FROM company');// WHERE email = ? AND password = ?');
@@ -70,11 +67,27 @@ class Company {
                 return $tab;
     
             }
-    
-    
     }
 
+    static function insertRate($id_users, $id_company, $note){
+
+        include('loginBDD.php');
+
+        $req = $bdd->prepare('DELETE FROM can_rate WHERE id_company = ? AND id_users = ?');
+            
+        if(!$req->execute([$id_company, $id_users]))
+            print_r($bdd->errorInfo());
+
+        $req = $bdd->prepare('INSERT INTO can_rate (id_company, id_users, rating ) VALUES (?, ?, ?)');
+
+        if(!$req->execute([$id_company, $id_users, $note]))
+            print_r($bdd->errorInfo());
+
+        if(!$req->execute([$promo_id, $id]))
+            print_r($bdd->errorInfo());
+    }
 }
+
 class Stats{
     static function get_count_rating($id_company,$rate,$role){
     

@@ -8,8 +8,6 @@ $twig = new \Twig\Environment($loader, [
     'cache' => false, //__DIR__.'/cache'
 ]);
 
-require '../models/model_user.php';
-
 
 $tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
         "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
