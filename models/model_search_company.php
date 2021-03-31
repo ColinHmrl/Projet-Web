@@ -151,6 +151,8 @@ class modele_search_company {
         $result = $prepared->fetchAll();
         //echo $stringSQL .'<br>';
         //var_dump($result);
+        
+            
         return $result;
     }
 }

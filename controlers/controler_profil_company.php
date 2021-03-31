@@ -38,8 +38,8 @@
         echo $twig->render('profil_company.html',[
             'result'=>Company::get_company_by_id($_GET['id']),
             'rateStudent' => Stats::rate('student',$_GET['id']),
-            'ratePilot' => Stats::rate('pilot',$_GET['id'])
-            ,'arr' => $tab
+            'ratePilot' => Stats::rate('pilot',$_GET['id']),
+            'arr' => $tab
             ]);
     }
     else{

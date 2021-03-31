@@ -15,7 +15,7 @@ $result = Offer::get_company();
 $outputCompany = '';
 foreach ($result as $e){
     foreach ( $e as $p){
-        $outputCompany .= "<option name=".$p.">".$p."</option>";
+        $outputCompany .= "<option name=".$p.">".Offer::get_company_by_id($p)->name."</option>";
     }
 }
 
@@ -58,7 +58,7 @@ if(isset($_COOKIE['user'])) {
                 'title'=> $result->title,
                 'nb_places' => $result->nb_places,
                 'description' => $result->description,
-                'Company' => "<option value=".$result->name." name=".$result->name." selected>".$result->name."</option>",
+                'Company' => "<option value=".$result->id." name=".$result->id." selected>".$result->name."</option>",
                 'id'=>$result->id,
                 'checked1'=> Offer::CheckOfferPromotionRelation(1,$result->id),
                 'checked2'=> Offer::CheckOfferPromotionRelation(2,$result->id),
@@ -71,8 +71,8 @@ if(isset($_COOKIE['user'])) {
     }elseif(isset($_POST['locality_offer'])){
         if(isset($_POST['id'])){
             //destination post modification
-            echo 'updated';
-            Offer::update_form($_POST['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description']);        //destination post cr�ation
+            
+            Offer::update_form($_POST['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],$_POST['company_id']);        //destination post cr�ation
             
             Offer::DeleteOfferPromotion($_POST['id']);
             $i = 1;
@@ -83,7 +83,7 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            header('Location: ../controlers/controler_create_offer.php');
+            //header('Location: ../controlers/controler_create_offer.php');
         }else{
             echo 'created';
             Offer::post_form($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],'HamerelCorp');
@@ -95,7 +95,7 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            header('Location: ../controlers/controler_create_offer.php');
+            //header('Location: ../controlers/controler_create_offer.php');
             
 
 
