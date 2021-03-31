@@ -116,7 +116,6 @@ class User{
 
 
             foreach($rights as $right){
-                var_dump($right);
 
                 $req = $bdd->prepare('INSERT INTO rights (id_right, id_users) VALUES (?, ?);');
                 
