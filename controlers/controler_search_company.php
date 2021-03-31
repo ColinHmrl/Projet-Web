@@ -3,16 +3,16 @@ session_start();
 
 require '../models/model_user.php';
 
-$tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
-        "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
-        "cstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
-        "ccompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
-        "coffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une offre')),
-        "soffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
-        "spilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
-        "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
-        "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
-        "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+$tab = ["cpilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
+        "cdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
+        "cstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
+        "ccompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
+        "coffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Créer une offre')),
+        "soffer" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
+        "spilot" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
+        "sdelegate" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
+        "sstudent" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
+        "scompany" => (Requetes\Rights::haveRight(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
         "cookie" => unserialize($_COOKIE['user'])->id
     ];
     
@@ -26,27 +26,27 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 $twig->addFunction(new \Twig\TwigFunction('getCompany', function ($id) {
-    return Company::get_company_by_id($id);
+    return Company::getCompanyById($id);
 }));
 
 $functionSkills = new \Twig\TwigFunction('getSkills', function ($id) {
-    return modele_search_company::getSkills($id);
+    return ModelSearchCompany::getSkillsById($id);
 });
 $twig->addFunction($functionSkills);
 
 $functionSkillsOfIdCompany = new \Twig\TwigFunction('getSkillsOfIdCompany', function ($id) {
-    return modele_search_company::getSkillsOfIdCompany($id);
+    return ModelSearchCompany::getSkillsOfIdCompany($id);
 });
 $twig->addFunction($functionSkillsOfIdCompany);
 
-$result = get_activity();
+$result = ModelSearchCompany::getActivity();
 $outputActivityArea = '';
 foreach ($result as $e){
     foreach ( $e as $p){
         $outputActivityArea .= '<option name='.$p.'>'.$p.'</option>';
     }
 }
-$result = get_skills();
+$result = ModelSearchCompany::getSkills();
 $outputSkills = '';
 foreach ($result as $e){
     foreach ( $e as $p){
@@ -54,7 +54,7 @@ foreach ($result as $e){
     }
 }
 
-$result = get_locality();
+$result = ModelSearchCompany::getLocality();
 $outputLocality = '';
 foreach ($result as $e){
     foreach ( $e as $p){
@@ -128,7 +128,7 @@ if(isset($_COOKIE['user'])) {
     echo $twig->render('search_company.html',['activity_area' => $outputActivityArea,
                                               'skills' => $outputSkills,
                                               'locality' => $outputLocality,
-                                              'result'=>modele_search_company::getCompanyForSearch($table)
+                                              'result'=>ModelSearchCompany::getCompanyForSearch($table)
                                               ,'arr' => $tab
                                               ]);
 

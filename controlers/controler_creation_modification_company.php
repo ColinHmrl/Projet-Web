@@ -32,7 +32,7 @@ if(isset($_COOKIE['user'])) {
 
     if(isset($_GET['id'])){
     
-        $result = get_company($_GET['id']);
+        $result = Company::getCompanyById($_GET['id']);
         echo $twig->render('creation_modification_company.html',[
             'id' => $result->id,
             'nameCompany' => $result->name,
@@ -43,13 +43,13 @@ if(isset($_COOKIE['user'])) {
             'titre'=> 'Modification Entreprise'
             ,'arr' => $tab
             ]);
-    }elseif(isset($_POST['name'])){
-        if($_POST['id']){
-            //destination post modification
-            echo 'updated';
-            //echo twig
-            Company::update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
-            header('Location: ../controlers/controler_creation_modification_company.php?id='. $_POST['id']);
+}elseif(isset($_POST['name'])){
+    if($_POST['id']){
+        //destination post modification
+        echo 'updated';
+        //echo twig
+        Company::updateCompany($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
+        header('Location: ../controlers/controler_creation_modification_company.php?id='. $_POST['id']);
         
         
         
@@ -62,14 +62,17 @@ if(isset($_COOKIE['user'])) {
         }
     }else{
 
-        //cr�ation
-        echo $twig->render('creation_modification_company.html',[
-        'titre'=> 'Creation Entreprise'
-        ,'tab' => $tab
-        ]);
-    }   
-}else{
-    echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
+    //cr�ation
+    echo $twig->render('creation_modification_company.html',[
+    'titre'=> 'Creation Entreprise',
+    'arr' => $tab
+    ]);
+}   
 
+    
+
+}
+else {
+    echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
 }
 ?>
