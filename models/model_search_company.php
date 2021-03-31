@@ -58,70 +58,104 @@ class modele_search_company {
     
 
     }
-    static function getCompany($tab){// selection via recherche dans search company 
+    static function getSkillsOfIdCompany($id) {
+        
+
+        include('loginBDD.php');
+        $stringSQL = 'SELECT skills.name FROM offer INNER JOIN need ON need.id_offer = offer.id INNER JOIN skills ON skills.id = need.id_skills INNER JOIN company on offer.id_company = company.id WHERE company.id = ?';
+        $req = $bdd->prepare($stringSQL);
+        
+        if(!$req->execute([$id]))
+            print_r($bdd->errorInfo());
+        else {
+            //var_dump(hash('sha256',$password));
+            if($donnees = $req->fetchAll()) {
+                $req->closeCursor();
+                return $donnees;
+            }
+            echo 'No Result';
+        
+        }
+    
+
+    }
+    static function getCompanyForSearch($tab){// selection via recherche dans search company 
 
         include('loginBDD.php');
 
-        $stringSQL = 'SELECT * FROM (SELECT  id as ID,name,activity_area,locality,email,invisible,del,description FROM company';
-
-
-        $count = count($tab);
-        
-
-        if($count>0) {
-            $stringSQL .= ' WHERE step = 6 ';
-            foreach($tab as $value => $key) {
-                $stringSQL .= ' AND '; 
-                switch($value) {
-                    default:
-                        $stringSQL .= " ' ".$value." ' = '".$key."'";
+        $stringSQL = "SELECT * FROM (SELECT  id as ID,name,activity_area,locality,email,invisible,del,description FROM company ) t1 
+                    LEFT JOIN 
+                    (SELECT company.id as id, AVG(rating) as rateStudent
+                    FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN users on can_rate.id_users = users.id 
+                    WHERE roles = 'student') t2
+                    ON (t1.id = t2.id)
+                    LEFT JOIN 
+                    (SELECT company.id as id, AVG(rating) as ratePilot
+                    FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN users on can_rate.id_users = users.id 
+                    WHERE roles = 'pilot') t3
+                    ON (t1.id = t3.id)
+                    LEFT JOIN
+                    (SELECT company.id, count(wishlist.id_users) as numberOfTrainee FROM offer INNER JOIN company on offer.id = company.id INNER JOIN wishlist on wishlist.id_offer = offer.id WHERE step = 6 GROUP BY company.id) t4
+                    ON (t1.id = t4.id)
+                    LEFT JOIN
+                    (SELECT offer.id_company as id, skills.name as skillsName FROM offer INNER JOIN need on offer.id = need.id_offer INNER JOIN skills on skills.id = need.id_skills";
                     
-                    
-                    break;
-                    
-                    case "trainee_score":
-                        $stringSQL .= " ' ".$value."' <= '".$key."'";
+        foreach($tab as $value => $key) {  
+            switch($value) {
 
-                    break ;
-                    case "number_of_trainee":
-                        $stringSQL .= " ' ".$value."' <= '".$key."'";
+                case "skillsName":
+                    $stringSQL .= " WHERE skills.name = '".$key."'";
 
-                    break ;
-                    case "pilotScore":
-                        $stringSQL .=" ' ". $value."' <= '".$key."'";
-
-                    break ;
-
-
-                }
+                break ;
             }
         }
-        $stringSQL .= ") t1 
-LEFT JOIN 
-(SELECT company.id as id, AVG(rating) as rateStudent
-FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN users on can_rate.id_users = users.id 
-WHERE roles = 'student') t2
-ON (t1.id = t2.id)
-LEFT JOIN 
-(SELECT company.id as id, AVG(rating) as ratePilot
-FROM company INNER JOIN can_rate on company.id = can_rate.id_company INNER JOIN users on can_rate.id_users = users.id 
-WHERE roles = 'pilot') t3
-ON (t1.id = t3.id)
-LEFT JOIN
-(SELECT company.id as id,COUNT(step)as number_of_trainee 
-FROM offer INNER JOIN company on offer.id = company.id INNER JOIN wishlist on wishlist.id_offer = offer.id) t4
-ON (t1.id = t4.id)
+                    
+                   
+        $stringSQL .=" GROUP BY offer.id_company) t5 ON (t1.id = t5.id)";
 
-";
+
+
+        $stringSQL .= ' WHERE del = 0';
+        foreach($tab as $value => $key) {
+            
+            switch($value) {
+                default:
+                    $stringSQL .= ' AND '; 
+                    $stringSQL .= "  ".$value."  = '".$key."'";
+                    
+                    
+                break;
+                    
+                case "rateStudent":
+                    $stringSQL .= ' AND '; 
+                    $stringSQL .= "  ".$value." > '".$key."'";
+
+                break ;
+                case "numberOfTrainee":
+                    $stringSQL .= ' AND '; 
+                    $stringSQL .= "  ".$value." > '".$key."'";
+
+                break ;
+                case "ratePilot":
+                    $stringSQL .= ' AND '; 
+                    $stringSQL .="  ". $value." > '".$key."'";
+
+                break ;
+
+            }
+        }
+        
+
         $prepared = $bdd->prepare($stringSQL);
         $prepared->execute();
         $result = $prepared->fetchAll();
-        
+        //echo $stringSQL .'<br>';
+        //var_dump($result);
         return $result;
     }
 }
 
-
+//SELECT company.id as id,COUNT(wishlist.step)as number_of_trainee FROM offer INNER JOIN company on offer.id = company.id INNER JOIN wishlist on wishlist.id_offer = offer.id
 
 
 

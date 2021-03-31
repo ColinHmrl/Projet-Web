@@ -32,16 +32,19 @@
     $twig->addFunction(new \Twig\TwigFunction('getCompany', function ($id) {
         return Company::get_company_by_id($id);
     }));
-
+    if(isset($_COOKIE['user'])) {
 
     if(isset($_GET['id'])){
         echo $twig->render('profil_company.html',[
-                                                 'result'=>Company::get_company_by_id($_GET['id']),
-                                                 'rateStudent' => Stats::rate('student',$_GET['id']),
-                                                 'ratePilot' => Stats::rate('pilot',$_GET['id'])
-                                                 ,'arr' => $tab
-                                                 ]);
+            'result'=>Company::get_company_by_id($_GET['id']),
+            'rateStudent' => Stats::rate('student',$_GET['id']),
+            'ratePilot' => Stats::rate('pilot',$_GET['id'])
+            ,'arr' => $tab
+            ]);
     }
-
+    else{
+    echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
+    }
+}
 
 ?>
