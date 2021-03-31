@@ -1,13 +1,25 @@
 <?php
 class Offer{
     static function updateForm($id,$locality_offer,$training_period,$remuneration_basis,$offer_date,$title,$nb_places,$description,$company_id){
-        return'update';
+
         $sum_offer_date = $offer_date ;
         $sum_offer_date .= " " .date('h:i:s');       
         try{
             include('loginBDD.php');
-            $sql = " UPDATE offer SET locality_offer = :locality_offer,training_period = :training_period,remuneration_basis = :remuneration_basis,offer_date = :offer_date, nb_places = :nb_places, title = :title,description = :description,del = :del,id_company = :id_company WHERE offer.id = :id";
+            $sql = "UPDATE offer SET locality_offer = :locality_offer,training_period = :training_period,remuneration_basis = :remuneration_basis,offer_date = :offer_date, nb_places = :nb_places, title = :title,description = :description,del = :del,id_company = :id_company WHERE offer.id = :id";
             $prepared = $bdd->prepare($sql);
+            var_dump([
+                ':locality_offer'=> $locality_offer,
+                ':training_period'=> $training_period,
+                ':remuneration_basis'=> $remuneration_basis,
+                ':offer_date'=> $sum_offer_date ,
+                ':title'=> $title,
+                ':nb_places' => $nb_places,
+                ':del' => 0,
+                ':description' => $description,
+                ':id_company' => $company_id,
+                ':id' => $id
+                ]);
             $prepared->execute([
                 ':locality_offer'=> $locality_offer,
                 ':training_period'=> $training_period,

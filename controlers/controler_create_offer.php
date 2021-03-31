@@ -15,7 +15,7 @@ $result = Offer::getCompany();
 $outputCompany = '';
 foreach ($result as $e){
     foreach ( $e as $p){
-        $outputCompany .= "<option name=".$p.">".Offer::get_company_by_id($p)->name."</option>";
+        $outputCompany .= "<option name=".$p." value=".$p.">".Offer::get_company_by_id($p)->name."</option>";
     }
 }
 
@@ -58,7 +58,7 @@ if(isset($_COOKIE['user'])) {
                 'title'=> $result->title,
                 'nb_places' => $result->nb_places,
                 'description' => $result->description,
-                'Company' => "<option value=".$result->id." name=".$result->id." selected>".$result->name."</option>",
+                'Company' => "<option value=".$result->id_company." name=".$result->id_company." selected>".$result->name."</option>",
                 'id'=>$result->id,
                 'checked1'=> Offer::CheckOfferPromotionRelation(1,$result->id),
                 'checked2'=> Offer::CheckOfferPromotionRelation(2,$result->id),
@@ -78,12 +78,11 @@ if(isset($_COOKIE['user'])) {
             $i = 1;
             for ($i = 1; $i <= 5; $i++){
                 if(!empty($_POST['A'.$i])){
-                    echo $_POST['id'];
                     Offer::PostOfferPromotion($i,$_POST['id']);
                 }
             }
             //redirection
-            //header('Location: ../controlers/controler_search_offer.php');
+            header('Location: ../controlers/controler_search_offer.php');
         }else{
             echo 'created';
             Offer::postForm($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],$_POST['company_id']);
@@ -95,7 +94,7 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            //header('Location: ../controlers/controler_search_offer.php');
+            header('Location: ../controlers/controler_search_offer.php');
             
 
 
