@@ -10,43 +10,48 @@ $twig = new \Twig\Environment($loader, [
 
 
 // arriv� sur la page mofification
-if(isset($_GET['id'])){
+if(isset($_COOKIE['user'])) {
+    if(isset($_GET['id'])){
     
-        $result = get_company($_GET['id']);
-        echo $twig->render('creation_modification_company.html',[
-            'id' => $result->id,
-            'nameCompany' => $result->name,
-            'locality' => $result->locality,
-            'email' => $result->email,
-            'activity_area' => $result->activity_area,
-            'description' => $result->description,
-            'titre'=> 'Modification Entreprise'
-            ]);
-}elseif(isset($_POST['name'])){
-    if($_POST['id']){
-        //destination post modification
-        echo 'updated';
-        //echo twig
-        update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
+            $result = get_company($_GET['id']);
+            echo $twig->render('creation_modification_company.html',[
+                'id' => $result->id,
+                'nameCompany' => $result->name,
+                'locality' => $result->locality,
+                'email' => $result->email,
+                'activity_area' => $result->activity_area,
+                'description' => $result->description,
+                'titre'=> 'Modification Entreprise'
+                ]);
+    }elseif(isset($_POST['name'])){
+        if($_POST['id']){
+            //destination post modification
+            echo 'updated';
+            //echo twig
+            update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
         
         
         
         
-        //destination post cr�ation
+            //destination post cr�ation
 
 
+        }else{
+            echo 'created';
+            post_form($_POST['name'],$_POST['description'],$_POST['activity_area'],$_POST['locality'],$_POST['email']);
+        }
     }else{
-        echo 'created';
-        post_form($_POST['name'],$_POST['description'],$_POST['activity_area'],$_POST['locality'],$_POST['email']);
-    }
-}else{
 
 
 
-    //cr�ation
-    echo $twig->render('creation_modification_company.html',[
-    'titre'=> 'Creation Entreprise'
-    ]);
-}   
+        //cr�ation
+        echo $twig->render('creation_modification_company.html',[
+        'titre'=> 'Creation Entreprise'
+        ]);
+    }   
+}else {
 
+    echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
+
+}
 ?>
