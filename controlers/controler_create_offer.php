@@ -41,7 +41,7 @@ if(isset($_COOKIE['user'])) {
 
 
 
-    if(isset($_GET['id'])){
+    if(!empty($_GET['id'])){
         //modif
     
         $result = Offer::getOffer($_GET['id']);
@@ -72,7 +72,7 @@ if(isset($_COOKIE['user'])) {
         if(isset($_POST['id'])){
             //destination post modification
             echo 'updated';
-            Offer::updateForm($_POST['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description']);        //destination post cr�ation
+            Offer::updateForm($_POST['id'],$_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],$_POST['company_id']);        //destination post cr�ation
             
             Offer::DeleteOfferPromotion($_POST['id']);
             $i = 1;
@@ -83,10 +83,10 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            header('Location: ../controlers/controler_search_offer.php');
+            //header('Location: ../controlers/controler_search_offer.php');
         }else{
             echo 'created';
-            Offer::postForm($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],'HamerelCorp');
+            Offer::postForm($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],$_POST['company_id']);
 
             $i = 1;
             for ($i = 1; $i <= 5; $i++){
@@ -95,7 +95,7 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            header('Location: ../controlers/controler_search_offer.php');
+            //header('Location: ../controlers/controler_search_offer.php');
             
 
 

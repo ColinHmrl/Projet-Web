@@ -8,7 +8,11 @@
 <div class="container">
         
     <form id="formulaire_offre" action="controler_create_offer.php" method="POST">
+        
+        {% if id != NULL %}
         <input class="col-12" type="hidden" id="id" name="id" value="{{id}}" requiered>
+        {% endif %}
+
         <div class="row">
             <div class="col text-center">
                 <h1 class="h1">{{titre}}</h1>
@@ -54,11 +58,11 @@
                             <div class="row crit">
                                 <label class="col-6">Promotions :</label>
                                 <div class="col-6">
-                                    <label class="row" for="A1">A1<input type="checkbox" id="A1" name="A1" value="1" {{checked1 | default('')}}/></label>
-                                    <label class="row" for="A2">A2<input type="checkbox" id="A2" name="A2" value="2" {{checked2 }}/></label>
-                                    <label class="row" for="A3">A3<input type="checkbox" id="A3" name="A3" value="3" {{checked3 }}/></label>
-                                    <label class="row" for="A4">A4<input type="checkbox" id="A4" name="A4" value="4" {{checked4 }}/></label>
-                                    <label class="row" for="A5">A5<input type="checkbox" id="A5" name="A5" value="5" {{checked5 }}/></label>
+                                    <label class="row" for="A1">A1<input type="checkbox" id="A1" name="A1" value="1" {{checked1 | default('')}} /></label>
+                                    <label class="row" for="A2">A2<input type="checkbox" id="A2" name="A2" value="2" {{checked2 }} /></label>
+                                    <label class="row" for="A3">A3<input type="checkbox" id="A3" name="A3" value="3" {{checked3 }} /></label>
+                                    <label class="row" for="A4">A4<input type="checkbox" id="A4" name="A4" value="4" {{checked4 }} /></label>
+                                    <label class="row" for="A5">A5<input type="checkbox" id="A5" name="A5" value="5" {{checked5 }} /></label>
                                 </div>
 
                             </div>
