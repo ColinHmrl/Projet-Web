@@ -45,7 +45,7 @@ if(isset($_GET['id'])){
         echo 'updated';
         //echo twig
         update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
-        
+        header('Location: ../controlers/controler_creation_modification_company.php?id='. $_POST['id']);
         
         
         
@@ -53,12 +53,10 @@ if(isset($_GET['id'])){
 
 
     }else{
-        echo 'created';
         post_form($_POST['name'],$_POST['description'],$_POST['activity_area'],$_POST['locality'],$_POST['email']);
+        header('Location: ../controlers/controler_creation_modification_company.php');
     }
 }else{
-
-
 
     //cr�ation
     echo $twig->render('creation_modification_company.html',[
