@@ -26,7 +26,8 @@ $twig = new \Twig\Environment($loader, [
 
 
 // arriv� sur la page mofification
-if(isset($_GET['id'])){
+if(isset($_COOKIE['user'])) {
+    if(isset($_GET['id'])){
     
         $result = get_company($_GET['id']);
         echo $twig->render('creation_modification_company.html',[
@@ -44,21 +45,19 @@ if(isset($_GET['id'])){
         //destination post modification
         echo 'updated';
         //echo twig
-        update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
+        Company::update_company($_POST['id'],$_POST['name'],$_POST['description'],$_POST['locality'],$_POST['activity_area'],$_POST['email']); 
+        header('Location: ../controlers/controler_creation_modification_company.php?id='. $_POST['id']);
         
         
         
-        
-        //destination post cr�ation
+            //destination post cr�ation
 
 
     }else{
-        echo 'created';
-        post_form($_POST['name'],$_POST['description'],$_POST['activity_area'],$_POST['locality'],$_POST['email']);
+        Company::post_form($_POST['name'],$_POST['description'],$_POST['activity_area'],$_POST['locality'],$_POST['email']);
+        header('Location: ../controlers/controler_creation_modification_company.php');
     }
 }else{
-
-
 
     //cr�ation
     echo $twig->render('creation_modification_company.html',[
@@ -67,4 +66,7 @@ if(isset($_GET['id'])){
     ]);
 }   
 
+    echo $twig->render('error_page.html',['error' => 'Error 403 : veuillez vous login...']);
+
+}
 ?>
