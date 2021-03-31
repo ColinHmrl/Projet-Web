@@ -7,49 +7,45 @@ require_once "../assets/vendors/class/Right.php";
 class User{
 
     static function insert_user($last_name, $first_name, $email, $password, $roles, $id_centers,$promotions,$rights){
-        if(Rights::have_right(unserialize($_COOKIE['user'])->id,'Supprimer une entreprise')){
-
-        }else{
-            try{
-                include('loginBDD.php');
-        
-                //insert datas in the table users
-        
-                $req = $bdd->prepare('INSERT INTO users (last_name, first_name, email, password, roles, del, id_centers) VALUES (?, ?, ?, ?, ?, false, ?);');
-                
-                if(!$req->execute([$last_name, $first_name, $email, $password, $roles, $id_centers]))
+        try{
+            include('loginBDD.php');
+    
+            //insert datas in the table users
+    
+            $req = $bdd->prepare('INSERT INTO users (last_name, first_name, email, password, roles, del, id_centers) VALUES (?, ?, ?, ?, ?, false, ?);');
+            
+            if(!$req->execute([$last_name, $first_name, $email, $password, $roles, $id_centers]))
+                print_r($bdd->errorInfo());
+    
+            //get id of the user you just add
+    
+            $id_user = $bdd->lastInsertId();
+    
+            //insert datas in user_promotions
+    
+            foreach($promotions as $promo){
+    
+                $req = $bdd->prepare('INSERT INTO users_promotions (id_promotions, id_users) VALUES (?, ?);');
+                $promo_id = Promotion::get_id_promotion($promo);
+                if(!$req->execute([$promo_id, $id_user]))
                     print_r($bdd->errorInfo());
-        
-                //get id of the user you just add
-        
-                $id_user = $bdd->lastInsertId();
-        
-                //insert datas in user_promotions
-        
-                foreach($promotions as $promo){
-        
-                    $req = $bdd->prepare('INSERT INTO users_promotions (id_promotions, id_users) VALUES (?, ?);');
-                    $promo_id = Promotion::get_id_promotion($promo);
-                    if(!$req->execute([$promo_id, $id_user]))
-                        print_r($bdd->errorInfo());
-                }
-        
-        
-                foreach($rights as $right){
-                    $req = $bdd->prepare('INSERT INTO rights (id_right, id_users) VALUES (?, ?);');
-                    if(!$req->execute([$right->id, $id_user]))
-                        print_r($bdd->errorInfo());
-                }
-        
             }
-            catch(\Exception $e)
-            {
-                    die('Erreur : '.$e->getMessage());
+    
+    
+            foreach($rights as $right){
+                $req = $bdd->prepare('INSERT INTO rights (id_right, id_users) VALUES (?, ?);');
+                if(!$req->execute([$right->id, $id_user]))
+                    print_r($bdd->errorInfo());
             }
-            catch(\PDOException $e)
-            {
-                    die('Erreur : '.$e->getMessage());
-            }
+    
+        }
+        catch(\Exception $e)
+        {
+                die('Erreur : '.$e->getMessage());
+        }
+        catch(\PDOException $e)
+        {
+                die('Erreur : '.$e->getMessage());
         }
     }
 
@@ -463,10 +459,6 @@ class Stats{
                 die('Erreur : '.$e->getMessage());
         }
     }
-
-
-
-
 }
 
 ?>

@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
 
-        if(API_get_user::verifUser($_GET["user"], $_GET["token"])) {
-            echo json_encode(API_get_user::getAllUser(empty($_GET['role']) ?: $_GET['role']));
+        if(ApiGetUser::verifUser($_GET["user"], $_GET["token"])) {
+            echo json_encode(ApiGetUser::getAllUser(empty($_GET['role']) ?: $_GET['role']));
         }
         else {
             http_response_code(403);
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 
-class API_get_user {
+class ApiGetUser {
 
 static function getAllUser($role = "null")
 {

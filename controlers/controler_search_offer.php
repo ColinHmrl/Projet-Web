@@ -1,6 +1,22 @@
 <?php
 session_start();
 
+require '../models/model_user.php';
+
+$tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
+        "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
+        "cstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
+        "ccompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
+        "coffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une offre')),
+        "soffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
+        "spilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
+        "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
+        "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
+        "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+        "cookie" => unserialize($_COOKIE['user'])->id
+    ];
+
+
 require_once '../assets/vendors/autoload.php';
 require '../models/model_company.php';
 require '../models/model_wishlist.php';
@@ -14,17 +30,17 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 $functionSkills = new \Twig\TwigFunction('getSkills', function ($id) {
-    return model_search_offer::getSkills($id);
+    return ModelSearchOffer::getSkills($id);
 });
 $twig->addFunction($functionSkills);
 
 
 $twig->addFunction(new \Twig\TwigFunction('getPromo', function ($id) {
-    return model_search_offer::getPromo($id);
+    return ModelSearchOffer::getPromo($id);
 }));
 
 $twig->addFunction(new \Twig\TwigFunction('isWishlist', function ($id1,$id2) {
-    return model_wishlist::isWishlist($id1,$id2);
+    return ModelWishlist::isWishlist($id1,$id2);
 }));
 
 $functionTruncate = new \Twig\TwigFunction('truncate', function ($text,$length,$r,$ifspace) {
@@ -36,10 +52,10 @@ $twig->addFunction($functionTruncate);
 if(isset($_COOKIE['user'])) {
 
     if(!empty($_GET['remove'])) {
-        model_wishlist::remove(unserialize($_COOKIE['user'])->id,$_GET['remove']);
+        ModelWishlist::remove(unserialize($_COOKIE['user'])->id,$_GET['remove']);
     }
     if(!empty($_GET['add'])) {
-        model_wishlist::add(unserialize($_COOKIE['user'])->id,$_GET['add']);
+        ModelWishlist::add(unserialize($_COOKIE['user'])->id,$_GET['add']);
     }
 
 
@@ -69,7 +85,7 @@ if(isset($_COOKIE['user'])) {
         $table['offer_date'] = $_GET['offer_date'];
         
 
-    echo $twig->render('search_offer.html',['tab'=>company::getCompanyName(),'result'=>model_search_offer::getOffer($table),'locations' => model_search_offer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id]);
+    echo $twig->render('search_offer.html',['tab'=>Company::getCompanyName(),'result'=>ModelSearchOffer::getOffer($table),'locations' => ModelSearchOffer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'arr' => $tab]);
 
 
 }

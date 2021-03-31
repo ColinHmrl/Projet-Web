@@ -1,7 +1,6 @@
-{% macro header(site) %}
+{% macro header(site,arr) %}
 
-
-<header class="container-fluid">
+<header class="container-fluid border-bottom border-dark">
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#">
             <img src="http://statistics-of-internship-finder.fr/Images/logo.png" id="logoheader" class="d-inline-block align-top" alt="">
@@ -11,32 +10,49 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-
+            {% if arr.cpilot == true or arr.cdelegate == true or arr.cstudent == true or arr.ccompany == true or arr.coffer == true %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Create
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% if arr.cpilot == true or arr.cdelegate == true or arr.cstudent%}
                 <a class="dropdown-item" href="http://{{site}}/controlers/controler_create_user.php">User</a>
+                {% endif %}
+                {% if arr.ccompany == true%}
                 <a class="dropdown-item" href="http://{{site}}/controlers/controler_creation_modification_company.php">Compagny</a>
+                {% endif %}
+                {% if arr.coffer == true%}
                 <a class="dropdown-item" href="http://{{site}}/controlers/controler_create_offer.php">Offer</a>
+                {% endif %}
               </div>
             </li>
+            {% endif %}
+            {% if arr.soffer == true%}
             <li class="nav-item">
                 <a class="nav-link" href="http://{{site}}/controlers/controler_search_offer.php">Offer</a>
               </li>
+              {% endif %}
+              {% if arr.spilot == true%}
               <li class="nav-item">
                 <a class="nav-link" href="http://{{site}}/controlers/controler_search_user.php?user_role=pilot">Pilot</a>
               </li>
+              {% endif %}
+              {% if arr.sdelegate == true%}
               <li class="nav-item">
                 <a class="nav-link" href="http://{{site}}/controlers/controler_search_user.php?user_role=delegate">Delegate</a>
               </li>
+              {% endif %}
+              {% if arr.sstudent == true%}
               <li class="nav-item">
                 <a class="nav-link" href="http://{{site}}/controlers/controler_search_user.php?user_role=student">Student</a>
               </li>
+              {% endif %}
+              {% if arr.scompany == true%}
               <li class="nav-item">
                 <a class="nav-link" href="http://{{site}}/controlers/controler_search_company.php">Compagny</a>
               </li>
+              {% endif %}
           </ul>
           <form class="form-inline my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
@@ -54,6 +70,5 @@
         </div>
       </nav>
 </header>
-
 
 {% endmacro %}

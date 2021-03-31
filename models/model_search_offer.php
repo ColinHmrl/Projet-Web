@@ -1,6 +1,6 @@
 <?php
 
-class model_search_offer {
+class ModelSearchOffer {
 
 static function getOffer($tab){
 

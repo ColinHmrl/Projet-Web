@@ -1,12 +1,12 @@
 <?php
 
-
 require_once 'assets/vendors/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../vues');
 $twig = new \Twig\Environment($loader, [
     'cache' => false, //__DIR__.'/cache'
 ]);
+
 
 if(isset($_GET['deco'])) {
     setcookie("user", "", time()-3600);
@@ -27,7 +27,7 @@ else {
         require 'models/model_login.php';
         
 
-        if(\Requetes\model_login::loginUser($_POST['inputEmail'],$_POST['inputPassword'])) {
+        if(\Requetes\ModelLogin::loginUser($_POST['inputEmail'],$_POST['inputPassword'])) {
             header('Location: index.php'); 
         }  
         else {

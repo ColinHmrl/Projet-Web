@@ -11,7 +11,7 @@
 
 {% block body %}
 
-<form autocomplete="off" class="container-fluid bg-danger" method="get">
+<form autocomplete="off" class="container-fluid" method="get" style="background-color:#d85f5f;">
     <div class="row justify-content-center py-3">
         <!--<input type="text" class="col-6" placeholder="search offer">-->
     </div>
@@ -109,7 +109,7 @@
 </form>
 
 {% for item in result %}
-<div class="container bg-primary my-3">
+<div class="container border border-dark my-3" style ="background-color:#ecc59c;">
     <!--Afficher les row-->
 
     <div class="row">
@@ -156,7 +156,8 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-3">
-                                    <p><i class="fas fa-map-marker-alt mr-0" style="font-size:1em"></i></p> {{item.locality_offer}}
+                                    <p><i class="fas fa-map-marker-alt mr-0" style="font-size:1em"></i></p>
+                                    {{item.locality_offer}}
                                 </div>
                                 <div class="col-3">
                                     <p><i class="far fa-building" style="font-size:1em"></i></p> {{item.name}}
@@ -189,7 +190,8 @@
     </div>
     <div class="row py-2 border-top border-dark">
         <div class="col-xl-2 col-lg-12">
-            <button type="button" class="btn btn-info btn-block applyform" onclick=" $('#formCV').show(500);">Apply</button>
+            <button type="button" class="btn btn-warning btn-block applyform"
+                onclick=" $('#formCV').show(500);">Apply</button>
         </div>
         <div class="col-xl-1 col-lg-12 text-center">
             {% if isWishlist(id_user,item.id) %}
@@ -200,10 +202,10 @@
         </div>
         <div class="col-xl-6 col-lg-12 text-center">
             <a href="../controlers/controler_create_offer.php?id={{item.id}}">
-                <button type="button" class="btn btn-info btn-xs my-1">Modifier</button>
+                <button type="button" class="btn btn-info btn-xs my-1 btn-warning">Modifier</button>
             </a>
             
-            <button type="button" class="btn btn-info">Delete</button>
+            <button type="button" class="btn btn-info btn-warning">Delete</button>
         </div>
         <div class="col-xl-3 col-lg-12 text-right p-2">
             {%if item.day_ago == 0 %}
@@ -219,43 +221,49 @@
 
         </div>
     </div>
-    
+
     {% block addrow %}
     {% endblock %}
-    
+
 
 
 
 </div>
 {% endfor %}
 
-<div class="container bg-succes" id="formCV" style="display:none;">
+<div class="container bg-succes p-2 w-50 border border-dark" id="formCV" style="display:none;
+position: fixed;
+bottom: 0%;
+left:50%;
+transform: translateX(-50%);
+background-color:#EBDCCB;">
     <form method="post" action="">
         <div class="row text-center justify-content-center">
             <div class="col-8">
-    
-                    <label for="cv">Choose your CV (PDF / Images):</label>
-    
+
+                <label for="cv">Choose your CV (PDF / Images):</label>
+
                 <input type="file" class="form-control-file" id="cv" name="cv" accept="image/*,.pdf">
-    
-                
-    
+
+
+
             </div>
-    
+
         </div>
         <div class="row text-center justify-content-center">
             <div class="col-8">
-            <label for="lm">Choose your Motivation Letter (PDF / Images):</label>
-    
-                <input type="file" class="form-control-file" id="lm" name="lm" accept="image/*,.pdf" style="background-color: none;">
+                <label for="lm">Choose your Motivation Letter (PDF / Images):</label>
+
+                <input type="file" class="form-control-file" id="lm" name="lm" accept="image/*,.pdf"
+                    style="background-color: none;">
             </div>
-            
+
         </div>
         <div class="row text-center justify-content-center">
             <div class="col-4">
                 <button type="button" class="btn btn-info btn-block">Send</button>
             </div>
-            
+
         </div>
     </form>
 </div>
