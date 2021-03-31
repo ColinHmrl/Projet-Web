@@ -5,7 +5,7 @@
 
 namespace Requetes;
 
-class model_login {
+class ModelLogin {
 
 static function loginUser($user,$password) {
 

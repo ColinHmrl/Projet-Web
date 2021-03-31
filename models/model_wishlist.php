@@ -1,6 +1,6 @@
 <?php
 
-class model_wishlist {
+class ModelWishlist {
 
     static function getOffer($tab){
 
@@ -61,7 +61,7 @@ class model_wishlist {
             while($donnee = $req->fetch()) {
 
                 if(isset($tab['promotion'])) {
-                    if(array_search($tab['promotion'],model_search_offer::getPromo($donnee->id)) !== false)
+                    if(array_search($tab['promotion'],ModelSearchOffer::getPromo($donnee->id)) !== false)
                     $donnees[] = $donnee;
                 }
                 else

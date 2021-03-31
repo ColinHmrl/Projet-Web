@@ -27,7 +27,7 @@ else {
         require 'models/model_login.php';
         
 
-        if(\Requetes\model_login::loginUser($_POST['inputEmail'],$_POST['inputPassword'])) {
+        if(\Requetes\ModelLogin::loginUser($_POST['inputEmail'],$_POST['inputPassword'])) {
             header('Location: index.php'); 
         }  
         else {
