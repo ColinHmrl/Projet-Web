@@ -62,7 +62,7 @@ if(isset($_COOKIE['user'])) {
                 'checked3'=> Offer::CheckOfferPromotionRelation(3,$result->id),
                 'checked4'=> Offer::CheckOfferPromotionRelation(4,$result->id),
                 'checked5'=> Offer::CheckOfferPromotionRelation(5,$result->id),
-
+                'arr' => $tab,
                 'titre'=> 'Modification Offer']);
 
     }elseif(isset($_POST['locality_offer'])){
