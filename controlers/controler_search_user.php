@@ -37,7 +37,7 @@ if (!empty($_COOKIE['user'])) {
         if (!empty($_GET['user_role']))
             echo $twig->render('search_user.html', ['role' => $_GET['user_role'], 'droitmodif' => $droitmodif, 'user' => unserialize($_COOKIE['user']), 'arr' => $tab]);
         else
-            echo $twig->render('search_user.html', ['droitmodif' => $droitmodif, 'user' => unserialize($_COOKIE['user']), 'tab' => $tab]);
+            echo $twig->render('search_user.html', ['droitmodif' => $droitmodif, 'user' => unserialize($_COOKIE['user']), 'arr' => $tab]);
     } else {
         echo $twig->render('error_page.html', ['error' => "Error 403 : vous n'avez pas acces à cette ressource :)"]);
     }
