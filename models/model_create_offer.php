@@ -27,7 +27,7 @@ class Offer{
 
     }
 
-    static function post_form($locality_offer,$training_period,$remuneration_basis,$offer_date,$title,$nb_places,$description,$company_name) {
+    static function post_form($locality_offer,$training_period,$remuneration_basis,$offer_date,$title,$nb_places,$description,$company_id) {
         $date_post = date('y-m-d h:i:s');
         $sum_offer_date = $offer_date ;
         $sum_offer_date .= " " .date('h:i:s');
@@ -50,7 +50,7 @@ class Offer{
                     ':nb_places' => $nb_places,
                     ':del' => 0,
                     ':description' => $description,
-                    ':id_company' => self::get_company_by_name($company_name)->id
+                    ':id_company' => $company_id
                 
 
                 ]);

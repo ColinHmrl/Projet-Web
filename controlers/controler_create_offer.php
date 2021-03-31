@@ -83,10 +83,10 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            //header('Location: ../controlers/controler_create_offer.php');
+            header('Location: ../controlers/controler_search_offer.php');
         }else{
             echo 'created';
-            Offer::post_form($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],'HamerelCorp');
+            Offer::post_form($_POST['locality_offer'],$_POST['training_period'],$_POST['remuneration_basis'],$_POST['offer_date'],$_POST['title'],$_POST['nb_places'],$_POST['description'],$_POST['company_id']);
 
             $i = 1;
             for ($i = 1; $i <= 5; $i++){
@@ -95,7 +95,7 @@ if(isset($_COOKIE['user'])) {
                 }
             }
             //redirection
-            //header('Location: ../controlers/controler_create_offer.php');
+            header('Location: ../controlers/controler_search_offer.php');
             
 
 
