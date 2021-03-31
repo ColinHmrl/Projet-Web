@@ -15,9 +15,15 @@
                                 <label for="role">Type d'utilisateur :</label>
                                 <select class="form-select role" id="role" name="role" >
                                     <option selected value="role" disabled>Role</option>
+                                    {% if cpilot == true %}
                                     <option {%if role == "pilot" %}selected{% endif %} value="pilot">Pilote</option>
+                                    {% endif %}
+                                    {% if cdelegate == true %}
                                     <option {%if role == "delegate" %}selected{% endif %} value="delegate">Délégué</option>
+                                    {% endif %}
+                                    {% if cstudent == true %}
                                     <option {%if role == "student" %}selected{% endif %} value="student">Etudiant</option>
+                                    {% endif %}
                                 </select>
                             </div>
                             <div class="field">

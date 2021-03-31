@@ -6,7 +6,21 @@ require '../models/model_company.php';
 require '../models/model_wishlist.php';
 require '../models/model_search_offer.php';
 require '../assets/vendors/function/truncate.php';
+require '../models/model_user.php';
 
+
+$tab = ["cpilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte pilote')),
+        "cdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte délégué')),
+        "cstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer un compte étudiant')),
+        "ccompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une entreprise')),
+        "coffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Créer une offre')),
+        "soffer" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une offre')),
+        "spilot" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte pilote')),
+        "sdelegate" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte délégué')),
+        "sstudent" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher un compte étudiant')),
+        "scompany" => (Requetes\Rights::have_right(unserialize($_COOKIE['user'])->id,'Rechercher une entreprise')),
+        "cookie" => unserialize($_COOKIE['user'])->id
+    ];
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../vues');
 $twig = new \Twig\Environment($loader, [
@@ -66,7 +80,7 @@ if(isset($_COOKIE['user'])) {
         $table['offer_date'] = $_GET['offer_date'];
         
     //var_dump(model_wishlist::getOffer($table));
-    echo $twig->render('wishlist.html',['tab'=>Company::getCompanyName(),'result'=>ModelWishlist::getOffer($table),'locations' => ModelSearchOffer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'titre' => 'Wishlist']);
+    echo $twig->render('wishlist.html',['tab'=>Company::getCompanyName(),'result'=>ModelWishlist::getOffer($table),'locations' => ModelSearchOffer::getLocation(),'data' => $table,'id_user' => unserialize($_COOKIE['user'])->id,'titre' => 'Wishlist','arr' => $tab]);
 
 
 }

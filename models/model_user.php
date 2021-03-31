@@ -459,10 +459,6 @@ class Stats{
                 die('Erreur : '.$e->getMessage());
         }
     }
-
-
-
-
 }
 
 ?>

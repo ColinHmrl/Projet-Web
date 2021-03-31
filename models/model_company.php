@@ -109,13 +109,19 @@ class Stats{
 
     }
     static function rate($role,$id_company){
-
+       
         $a= self::get_count_rating($id_company,'A',$role);
         $b= self::get_count_rating($id_company,'B',$role);
         $c= self::get_count_rating($id_company,'C',$role);
         $d= self::get_count_rating($id_company,'D',$role);
+        if ($a+$b+$c+$d != 0 ){
+            return ($a*5+$b*4+$c*2+$d*1)/($a+$b+$c+$d);
+        }else {
+            return 0;
+        }
 
-       return ($a*5+$b*4+$c*2+$d*1)/($a+$b+$c+$d);
+            
+
     }
     
 }
