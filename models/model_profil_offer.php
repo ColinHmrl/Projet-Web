@@ -3,7 +3,7 @@ class Profil{
 	static function getProfilById($id){ // get one offer by id 
         try{
             include('loginBDD.php');
-            $sql = "SELECT * FROM offer INNER JOIN company on offer.id_company = company.id WHERE offer.id = :id";
+            $sql = "SELECT offer.id,title,name,offer.description,locality_offer,offer_date,training_period,remuneration_basis,nb_places FROM offer INNER JOIN company on offer.id_company = company.id WHERE offer.id = :id";
             $prepared = $bdd->prepare($sql);
 
             if(!$prepared->execute([
