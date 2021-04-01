@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+{% block links %}
+<link href="http://statistics-of-internship-finder.fr/styles/create_company.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div class="container">
+
+    <h1 class="row">{{title}}</h1>
+    <div class="row">
+        <div class="col-6">
+            <p class="row">Comany Name : {{name}}</p>
+            <p class="row">Locality : {{locality_offer}}</p>
+            <p class="row">Offer Date : {{offer_date}}</p>
+        </div>
+        <div class="col-6">
+            <p class="row">Training Period : {{training_period}}</p>
+            <p class="row">Remuneration : {{remuneration_basis}}</p>
+            <p class="row">Places Available : {{nb_places}}</p>
+        </div>
+    </div>
+    <!-- <p class="row">Promotion</p>-->
+    <div class="row">
+        <div class="col-6">
+            <p class="row">Description :</p>
+            <p class="row">{{description}}</p>
+        </div>
+        <div class="" col-6>
+            <p class="row">Statistics :</p>
+            <p class="row"> How many students have this offer in wishlist : {{howManyWishlist}}</p>
+            <p class="row"> How many students are trainees of this offer : {{howManyTrainee}}</p>
+            <p class="row"> Remaining place : {{nb_places - howManyTrainee}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
